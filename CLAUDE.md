@@ -63,7 +63,7 @@ Public preview of a local server: `cloudflared tunnel --url http://localhost:417
 
 ## Deploy
 
-- Branches: `main` = development, `deploy` = production. Cloudflare **Workers Builds** watches `deploy`: every push there runs `npm run build` + `npx wrangler deploy` and updates https://strx.it.
+- Branches: `main` = development, `deploy` = production. Cloudflare **Workers Builds** watches `deploy`: every push there runs `npm run build` + `npx wrangler deploy` and updates https://strx.it. Pushes to other branches (e.g. `main`) only produce preview builds (`npx wrangler preview`); build status: Cloudflare dashboard → strx-it → Deployments / Builds.
 - Release: `git checkout deploy && git merge --ff-only main && git push && git checkout main`. Pushing to `deploy` is a production release: ask before doing it.
 - It is a Worker (SSR + static assets), not a Cloudflare Pages project: do not migrate to Pages.
 - Worker name: `strx-it`. Custom domains `strx.it` and `www.strx.it` are declared in `wrangler.jsonc` (`routes` with `custom_domain: true`), so every deploy keeps them. Fallback URL: https://strx-it.fstraps.workers.dev (`workers_dev: true`); `preview_urls: true` gives per-version preview URLs.

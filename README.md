@@ -86,7 +86,7 @@ Workers Builds settings (Cloudflare dashboard → Workers & Pages → `strx-it` 
 | Production branch | `deploy` |
 | Build command | `npm run build` |
 | Deploy command | `npx wrangler deploy` |
-| Non-production branch builds | disabled (or `npx wrangler versions upload` for preview URLs) |
+| Preview builds | enabled: other branches (e.g. `main`) get a preview URL via `npx wrangler preview`, production untouched |
 
 Manual deploy from a local machine is still possible with `npx wrangler login` once, then `npm run deploy`.
 Custom domains (`strx.it`, `www.strx.it`) are declared in `wrangler.jsonc`.
