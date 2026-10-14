@@ -5,13 +5,13 @@ import type { SocialId } from "~/lib/site";
 
 export const hero = {
   badge: "Strx.it's me",
-  title: "Project manager and full-stack developer.",
+  title: "Project leader and full-stack developer, AI-native.",
   intro:
-    "I run delivery and write the code: TypeScript, React, Node.js and PostgreSQL on Linux. Off the clock I trade the markets and produce music.",
+    "I lead projects from first idea to production and write the code myself. AI sits at the core of how I work: agents in the loop for planning, coding, review and docs, so small teams ship like big ones.",
   terminal: [
     { command: "whoami", output: ["strx"] },
-    { command: "cat roles.txt", output: ["project-manager", "full-stack-developer"] },
-    { command: 'psql -c "select * from interests"', output: ["trading | music | linux | tech"] },
+    { command: "cat roles.txt", output: ["project-leader", "full-stack-developer", "ai-native-builder"] },
+    { command: 'claude "how do you work?"', output: ["plan → build → review → ship", "humans decide, agents accelerate"] },
   ],
 };
 
@@ -23,37 +23,37 @@ export interface Skill {
 
 export const skills = {
   eyebrow: "skills",
-  title: "One person who can plan it, build it and keep it running.",
+  title: "I lead the project, build the product and put AI to work on both.",
   items: [
     {
       icon: "listChecks",
-      title: "Project management",
-      text: "Scope, plan and deliver. Clear milestones, honest estimates and a team that always knows what ships next.",
+      title: "Project leadership",
+      text: "From kickoff to go-live: scope, roadmap and priorities. A team that knows what ships next and clients who always know where things stand.",
+    },
+    {
+      icon: "sparkles",
+      title: "AI-native development",
+      text: "AI in every step of the cycle: Claude Code and agents for coding, refactoring, reviews, tests and documentation, with a human owning every decision.",
+    },
+    {
+      icon: "bot",
+      title: "AI tooling for teams",
+      text: "Custom agents, skills, plugins and MCP integrations that encode how a team works: tickets, reports, onboarding, docs. Less busywork, more shipping.",
     },
     {
       icon: "code",
-      title: "Full-stack development",
-      text: "TypeScript end to end: React front ends, Node.js services and APIs written to be maintained by someone else.",
-    },
-    {
-      icon: "terminal",
-      title: "Linux",
-      text: "Ubuntu LTS as a daily driver. Servers, shell automation and deployments I can debug over SSH.",
+      title: "Full-stack TypeScript",
+      text: "React front ends, Node.js APIs and services, typed end to end and written to be maintained by someone else.",
     },
     {
       icon: "database",
-      title: "PostgreSQL",
-      text: "Schema design, query tuning and stored procedures for data-heavy business systems.",
+      title: "PostgreSQL & data",
+      text: "Schema design, query tuning and data-heavy business systems that stay fast as they grow.",
     },
     {
-      icon: "trendingUp",
-      title: "Trading",
-      text: "A rules-first approach to the markets: defined risk, tested logic and automation with MT5 expert advisors.",
-    },
-    {
-      icon: "music",
-      title: "Music creation",
-      text: "AI-assisted tracks in an afro tech, ethnic and esoteric style, released on my own channel.",
+      icon: "cloud",
+      title: "Linux & cloud",
+      text: "Ubuntu as a daily driver, containers, serverless on Cloudflare. Deployments I can automate, monitor and debug over SSH.",
     },
   ] satisfies Skill[],
 };
@@ -61,28 +61,39 @@ export const skills = {
 export const stack = {
   eyebrow: "stack",
   title: "Tools I reach for every day.",
-  items: ["TypeScript", "React", "Node.js", "PostgreSQL", "Ubuntu LTS", "Bash", "MetaTrader 5"],
+  items: [
+    "Claude Code",
+    "MCP",
+    "TypeScript",
+    "React",
+    "Node.js",
+    "PostgreSQL",
+    "Tailwind CSS",
+    "Cloudflare",
+    "Docker",
+    "Ubuntu LTS",
+  ],
 };
 
 export const afterHours = {
   eyebrow: "after_hours",
-  title: "Two disciplines, one habit: build systems and refine them.",
+  title: "Off the clock, same mindset: build systems, measure, iterate.",
   items: [
     {
       title: "Trading",
-      text: "Funded accounts, a live account and an expert advisor of my own for MT5. The same discipline as project work: a plan, a risk limit and a review after every cycle.",
+      text: "Rules-based trading on funded and live accounts, with an MT5 expert advisor of my own. The same discipline as project work: a plan, a risk limit and a review after every cycle.",
     },
     {
       title: "Music",
-      text: "Afro tech with an ethnic, esoteric edge, made with AI tools and published on YouTube. Part experiment, part creative outlet.",
+      text: "Afro tech with an ethnic, esoteric edge, produced with AI tools and released on YouTube and SoundCloud. AI as an instrument, not a shortcut.",
     },
   ],
 };
 
 export const links = {
   eyebrow: "links",
-  title: "Find me online.",
-  intro: "Talk to me, follow the work, or listen to the music.",
+  title: "Let's talk.",
+  intro: "Have a project in mind, or want to bring AI into how your team works? Reach out.",
   items: [
     { social: "telegram", icon: "send" },
     { social: "linkedin", icon: "linkedin" },

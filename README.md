@@ -1,6 +1,6 @@
 # strx.it
 
-Personal website of Francesco "Strx" Strappini — project manager and full-stack developer.
+Personal website of Francesco "Strx" Strappini — project leader and AI-native full-stack developer.
 
 Built with **React 19 + TypeScript** on **React Router v8 (framework mode)**, styled with **Tailwind CSS v4**, and deployed serverless on **Cloudflare Workers**.
 

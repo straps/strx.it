@@ -2,9 +2,9 @@
 export const site = {
   name: "strx.it",
   url: "https://strx.it",
-  title: "Strx · Project manager and full-stack developer",
+  title: "Strx · Project leader and AI-native full-stack developer",
   description:
-    "Francesco \"Strx\" Strappini: project manager and full-stack developer. TypeScript, React, Node.js and PostgreSQL on Linux. Off the clock: trading and music.",
+    "Francesco \"Strx\" Strappini: project leader and full-stack developer with AI at the core of how he works. TypeScript, React, Node.js, PostgreSQL, Claude Code and agents.",
   email: "fstraps@gmail.com",
 } as const;
 
