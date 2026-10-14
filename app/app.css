@@ -1,0 +1,68 @@
+@import "tailwindcss" source(".");
+@import "@fontsource-variable/inter";
+@import "@fontsource-variable/jetbrains-mono";
+
+/* Design tokens (from the "Strx Personal Site" canvas, Hydra design system) */
+@theme {
+  --font-sans: "Inter Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono Variable", ui-monospace, Menlo, monospace;
+
+  --color-bg: #020817;
+  --color-surface: #0d233f;
+  --color-surface-hover: #1e293b;
+  --color-border: #30425f;
+  --color-fg: #f8fafc;
+  --color-muted: #94a3b8;
+  --color-subtle: #96b9de;
+  --color-dot: #4a5c73;
+  --color-accent: #93c23d;
+  --color-link: #93c5fd;
+  --color-chip: #122454;
+  --color-primary: #2563eb;
+  --color-primary-hover: #3b82f6;
+
+  --container-site: 1120px;
+
+  --animate-blink: blink 1s step-end infinite;
+
+  @keyframes blink {
+    50% {
+      opacity: 0;
+    }
+  }
+}
+
+@layer base {
+  html {
+    color-scheme: dark;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-bg text-fg font-sans antialiased;
+  }
+
+  h1,
+  h2,
+  h3 {
+    @apply font-mono;
+  }
+
+  a {
+    @apply text-link no-underline hover:text-fg;
+  }
+
+  a:focus-visible {
+    @apply rounded-md outline outline-1 outline-offset-3 outline-primary-hover;
+  }
+
+  [id] {
+    scroll-margin-top: 1rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}

@@ -1,0 +1,18 @@
+/**
+ * Wrangler configuration: https://developers.cloudflare.com/workers/wrangler/configuration/
+ */
+{
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"name": "strx-it",
+	"compatibility_date": "2026-10-06",
+	"main": "./workers/app.ts",
+	"observability": {
+		"enabled": true
+	},
+	"upload_source_maps": true
+	/**
+	 * Custom domain: uncomment once the strx.it zone is on Cloudflare.
+	 * https://developers.cloudflare.com/workers/configuration/routing/custom-domains/
+	 */
+	// "routes": [{ "pattern": "strx.it", "custom_domain": true }, { "pattern": "www.strx.it", "custom_domain": true }]
+}
