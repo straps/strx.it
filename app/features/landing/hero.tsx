@@ -1,6 +1,6 @@
 import { Icon } from "~/components/icons";
 import { ButtonLink, Container } from "~/components/ui";
-import { site, socials } from "~/lib/site";
+import { site } from "~/lib/site";
 
 import { hero } from "./content";
 import { Terminal } from "./terminal";
@@ -27,15 +27,6 @@ export function Hero() {
             </ButtonLink>
             <ButtonLink href="#skills" variant="outline">
               See what I do
-            </ButtonLink>
-            <ButtonLink
-              href={socials.linkedin.href}
-              variant="outline"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <Icon name="linkedin" />
-              LinkedIn
             </ButtonLink>
           </div>
         </div>

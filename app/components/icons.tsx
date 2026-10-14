@@ -2,6 +2,19 @@ import type { SVGProps } from "react";
 
 /** Lucide-style stroke icons, inlined to keep the bundle dependency-free. */
 const paths = {
+  menu: (
+    <>
+      <line x1="4" x2="20" y1="6" y2="6" />
+      <line x1="4" x2="20" y1="12" y2="12" />
+      <line x1="4" x2="20" y1="18" y2="18" />
+    </>
+  ),
+  close: (
+    <>
+      <path d="M18 6 6 18" />
+      <path d="m6 6 12 12" />
+    </>
+  ),
   arrowRight: (
     <>
       <path d="M5 12h14" />

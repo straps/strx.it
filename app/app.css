@@ -57,7 +57,7 @@
   }
 
   [id] {
-    scroll-margin-top: 1rem;
+    scroll-margin-top: 4.5rem; /* compact sticky header height + breathing room */
   }
 }
 
