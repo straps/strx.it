@@ -89,7 +89,7 @@ Workers Builds settings (Cloudflare dashboard → Workers & Pages → `strx-it` 
 | Non-production branch builds | disabled (or `npx wrangler versions upload` for preview URLs) |
 
 Manual deploy from a local machine is still possible with `npx wrangler login` once, then `npm run deploy`.
-The custom domain `strx.it` is attached to the Worker under Settings → Domains & Routes.
+Custom domains (`strx.it`, `www.strx.it`) are declared in `wrangler.jsonc`.
 
 ## License
 

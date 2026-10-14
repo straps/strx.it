@@ -9,10 +9,11 @@
 	"observability": {
 		"enabled": true
 	},
-	"upload_source_maps": true
-	/**
-	 * Custom domain: uncomment once the strx.it zone is on Cloudflare.
-	 * https://developers.cloudflare.com/workers/configuration/routing/custom-domains/
-	 */
-	// "routes": [{ "pattern": "strx.it", "custom_domain": true }, { "pattern": "www.strx.it", "custom_domain": true }]
+	"upload_source_maps": true,
+	"workers_dev": true,
+	"preview_urls": true,
+	"routes": [
+		{ "pattern": "strx.it", "custom_domain": true },
+		{ "pattern": "www.strx.it", "custom_domain": true }
+	]
 }

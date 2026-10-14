@@ -66,6 +66,20 @@ Public preview of a local server: `cloudflared tunnel --url http://localhost:417
 - Branches: `main` = development, `deploy` = production. Cloudflare **Workers Builds** watches `deploy`: every push there runs `npm run build` + `npx wrangler deploy` and updates https://strx.it.
 - Release: `git checkout deploy && git merge --ff-only main && git push && git checkout main`. Pushing to `deploy` is a production release: ask before doing it.
 - It is a Worker (SSR + static assets), not a Cloudflare Pages project: do not migrate to Pages.
-- Worker name: `strx-it`. The custom domain is attached in the dashboard (Settings → Domains & Routes); alternatively uncomment `routes` in `wrangler.jsonc`.
+- Worker name: `strx-it`. Custom domains `strx.it` and `www.strx.it` are declared in `wrangler.jsonc` (`routes` with `custom_domain: true`), so every deploy keeps them. Fallback URL: https://strx-it.fstraps.workers.dev (`workers_dev: true`); `preview_urls: true` gives per-version preview URLs.
 - Generated files not to commit: `build/`, `.react-router/`, `.wrangler/`, `worker-configuration.d.ts` (already gitignored).
 - Secrets: `.dev.vars` locally (gitignored), `wrangler secret put` or dashboard variables in production.
+
+## Cloudflare access
+
+- Deploy and API credentials live in the gitignored `.env`; Wrangler loads it by itself (no `wrangler login` needed). Never copy credential values into committed files, docs or logs.
+- Account details, tooling paths and API recipes are in the private, gitignored file imported below (absent in public clones):
+
+@INFRA.local.md
+
+## Domain and DNS
+
+- DNS for `strx.it` is delegated to Cloudflare (full setup); registrar details are in `INFRA.local.md`.
+- DNS records for the apex and `www` are created automatically by the Worker custom domains: do not add A/CNAME records for them by hand.
+- The domain sends no email: `TXT strx.it "v=spf1 -all"` and `TXT _dmarc "v=DMARC1; p=reject; adkim=s; aspf=s"` block spoofing. If email is ever added, update both.
+- Check delegation: `dig +short NS strx.it` (authoritative: `dig NS strx.it @a.dns.it +norec`).
