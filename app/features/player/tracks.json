@@ -1,0 +1,74 @@
+[
+  {
+    "id": "001-spring-desert-ritual",
+    "title": "Spring Desert Ritual",
+    "duration": "4:13",
+    "audio": "/music/001-spring-desert-ritual.mp3",
+    "cover": "/music/001-spring-desert-ritual.jpg",
+    "links": {
+      "youtube": "https://youtu.be/FkXVI0At8yU",
+      "soundcloud": "https://soundcloud.com/strx-musix/spring-desert-ritual",
+      "instagram": "https://www.instagram.com/reel/DeCNE_xDvKa/"
+    }
+  },
+  {
+    "id": "002-powerful-ritual-drop",
+    "title": "Powerful Ritual Drop",
+    "duration": "3:55",
+    "audio": "/music/002-powerful-ritual-drop.mp3",
+    "cover": "/music/002-powerful-ritual-drop.jpg",
+    "links": {
+      "youtube": "https://youtu.be/wD_klWw8D-8",
+      "soundcloud": "https://soundcloud.com/strx-musix/powerful-ritual-drop",
+      "instagram": "https://www.instagram.com/reel/DeCNMaeDC96/"
+    }
+  },
+  {
+    "id": "003-raise-it-high",
+    "title": "Raise it High",
+    "duration": "3:53",
+    "audio": "/music/003-raise-it-high.mp3",
+    "cover": "/music/003-raise-it-high.jpg",
+    "links": {
+      "youtube": "https://youtu.be/Un--wg6P8o0",
+      "soundcloud": "https://soundcloud.com/strx-musix/raise-it-high",
+      "instagram": "https://www.instagram.com/reel/DeCNTV_DSQ8/"
+    }
+  },
+  {
+    "id": "004-highland-euphoria",
+    "title": "Highland Euphoria",
+    "duration": "3:00",
+    "audio": "/music/004-highland-euphoria.mp3",
+    "cover": "/music/004-highland-euphoria.jpg",
+    "links": {
+      "youtube": "https://youtu.be/0Y8INbY9GKw",
+      "soundcloud": "https://soundcloud.com/strx-musix/highland-euphoria",
+      "instagram": "https://www.instagram.com/reel/DeCNZbFjZPM/"
+    }
+  },
+  {
+    "id": "005-tribute-to-the-island-of-dreams",
+    "title": "Tribute to the Island of Dreams",
+    "duration": "3:37",
+    "audio": "/music/005-tribute-to-the-island-of-dreams.mp3",
+    "cover": "/music/005-tribute-to-the-island-of-dreams.jpg",
+    "links": {
+      "youtube": "https://youtu.be/BIlo3pBo9xQ",
+      "soundcloud": "https://soundcloud.com/strx-musix/tribute-to-the-island-of-dreams",
+      "instagram": "https://www.instagram.com/reel/DeeVWMSDrXB/"
+    }
+  },
+  {
+    "id": "006-northern-festive-drive",
+    "title": "Northern Festive Drive",
+    "duration": "3:35",
+    "audio": "/music/006-northern-festive-drive.mp3",
+    "cover": "/music/006-northern-festive-drive.jpg",
+    "links": {
+      "youtube": "https://youtu.be/Fl5tMqtSDQA",
+      "soundcloud": "https://soundcloud.com/strx-musix/northern-festive-drive",
+      "instagram": "https://www.instagram.com/reel/DeeeC32nOOS/"
+    }
+  }
+]

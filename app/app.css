@@ -66,3 +66,24 @@
     scroll-behavior: auto;
   }
 }
+
+/* Seek bar of the bottom music player: thin track with an accent-filled progress part. */
+.player-range {
+  appearance: none;
+  cursor: pointer;
+  background: linear-gradient(to right, var(--color-accent) var(--progress, 0%), var(--color-border) var(--progress, 0%));
+}
+.player-range::-webkit-slider-thumb {
+  appearance: none;
+  width: 0;
+  height: 0;
+}
+.player-range::-moz-range-thumb {
+  width: 0;
+  height: 0;
+  border: 0;
+}
+.player-range:focus-visible {
+  outline: 2px solid var(--color-link);
+  outline-offset: 2px;
+}
