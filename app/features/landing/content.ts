@@ -3,6 +3,11 @@ import type { SocialId } from "~/lib/site";
 
 /** Landing page copy, kept apart from markup so it can be edited in one place. */
 
+export interface TerminalLine {
+  command: string;
+  output: string[];
+}
+
 export const hero = {
   badge: "Strx.it's me",
   title: "Project leader and full-stack developer, AI-native.",
@@ -14,6 +19,21 @@ export const hero = {
     { command: 'claude -p "how do you work?"', output: ["plan → build → review → ship", "humans decide, agents accelerate"] },
   ],
 };
+
+/** Shown in random order, three per round, after the opening session has played once. Keep outputs to 2 lines. */
+export const demoCommands: TerminalLine[] = [
+  { command: 'claude -p "review my last commit"', output: ["no secrets, no TODOs left", "ship it ✅"] },
+  { command: 'claude -p "what ships next?"', output: ["scope → roadmap → priorities", "clients always know where things stand"] },
+  { command: "ls ~/agents", output: ["ticket-bot  report-writer", "onboarding-guide  mcp-servers/"] },
+  { command: 'psql -c "select count(*) from ideas"', output: ["∞"] },
+  { command: "curl -sI https://strx.it | head -1", output: ["HTTP/2 200"] },
+  { command: "docker ps", output: ["no containers: this site is a Worker ☁️"] },
+  { command: "ls ~/music | shuf -n1", output: ["Raise it High"] },
+  { command: "play --mute", output: ["muted by default, unmute at the bottom ↓"] },
+  { command: "sudo make me a sandwich", output: ["strx is not in the sudoers file.", "This incident will be reported."] },
+  { command: "git log --oneline -2", output: ["c09da48 Terminal loop and player seek", "e140815 Player links on mobile"] },
+  { command: "fortune", output: ["Ship small, ship often.", "Let the agents carry the boxes."] },
+];
 
 export interface Skill {
   icon: IconName;

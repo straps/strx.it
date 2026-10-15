@@ -2,9 +2,10 @@ import { useEffect, useState } from "react";
 
 import { cardClass, cx } from "~/components/ui";
 
-import { hero } from "./content";
+import { demoCommands, hero, type TerminalLine } from "./content";
 
-type TerminalLine = (typeof hero.terminal)[number];
+/** Commands per random round: same count as the opening session, so the box never outgrows it. */
+const ROUND_SIZE = hero.terminal.length;
 
 /** Progress of the typing animation: current line, typed characters, whether its output is shown. */
 interface Progress {
@@ -14,7 +15,7 @@ interface Progress {
 }
 
 const START: Progress = { line: 0, chars: 0, output: false };
-const DONE: Progress = { line: hero.terminal.length, chars: 0, output: false };
+const done = (script: readonly TerminalLine[]): Progress => ({ line: script.length, chars: 0, output: false });
 /** Typed at the final prompt to wipe the screen before the session replays. */
 const CLEAR_COMMAND = "clear";
 
@@ -37,13 +38,19 @@ const timing = {
 
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
-/** Plays the scripted session on mount, then clears the screen and replays it in a loop; jumps to the end when the user prefers reduced motion. */
-function useTypingSession(lines: readonly TerminalLine[]) {
+const shuffled = <T,>(list: readonly T[]) => [...list].sort(() => Math.random() - 0.5);
+
+/**
+ * Plays the opening session, then loops: idle, type `clear`, wipe the screen and play a round of
+ * random demo commands. Jumps straight to the opening transcript when the user prefers reduced motion.
+ */
+function useTypingSession(opening: readonly TerminalLine[]) {
+  const [script, setScript] = useState(opening);
   const [progress, setProgress] = useState<Progress>(START);
 
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      setProgress(DONE);
+      setProgress(done(opening));
       return;
     }
 
@@ -53,7 +60,6 @@ function useTypingSession(lines: readonly TerminalLine[]) {
       setProgress(next);
       await sleep(delay);
     };
-
     const typeCommand = async (command: string, at: (chars: number) => Progress) => {
       for (let chars = 1; chars <= command.length; chars++) {
         await step(at(chars), timing.key + ((chars * 37) % timing.jitter));
@@ -62,6 +68,7 @@ function useTypingSession(lines: readonly TerminalLine[]) {
     };
 
     (async () => {
+      let lines = opening;
       await sleep(timing.start);
       while (!cancelled) {
         for (const [line, { command }] of lines.entries()) {
@@ -69,22 +76,24 @@ function useTypingSession(lines: readonly TerminalLine[]) {
           await typeCommand(command, (chars) => ({ line, chars, output: false }));
           await step({ line, chars: command.length, output: true }, timing.read);
         }
-        await step(DONE, timing.idle);
-        await typeCommand(CLEAR_COMMAND, (chars) => ({ ...DONE, chars }));
+        await step(done(lines), timing.idle);
+        await typeCommand(CLEAR_COMMAND, (chars) => ({ ...done(lines), chars }));
         await step(START, timing.cleared);
+        lines = shuffled(demoCommands).slice(0, ROUND_SIZE);
+        setScript(lines);
       }
     })();
 
     return () => {
       cancelled = true;
     };
-  }, [lines]);
+  }, [opening]);
 
-  return progress;
+  return { script, progress };
 }
 
 export function Terminal() {
-  const progress = useTypingSession(hero.terminal);
+  const { script, progress } = useTypingSession(hero.terminal);
 
   return (
     <figure aria-label="Terminal session introducing Strx" className={cx(cardClass, "m-0 overflow-hidden p-0")}>
@@ -97,22 +106,23 @@ export function Terminal() {
       {/* Both layers share one grid cell: the full transcript sizes the box and is what
           screen readers and crawlers read; the animated layer is drawn on top of it. */}
       <div className="grid p-6 font-mono text-sm leading-6">
-        <Session progress={DONE} className="opacity-0" />
-        <Session progress={progress} aria-hidden="true" />
+        <Session script={hero.terminal} progress={done(hero.terminal)} className="opacity-0" />
+        <Session script={script} progress={progress} aria-hidden="true" />
       </div>
     </figure>
   );
 }
 
 interface SessionProps {
+  script: readonly TerminalLine[];
   progress: Progress;
   className?: string;
   "aria-hidden"?: "true";
 }
 
-function Session({ progress, className, ...aria }: SessionProps) {
-  const visible = hero.terminal.slice(0, Math.min(progress.line + 1, hero.terminal.length));
-  const finished = progress.line >= hero.terminal.length;
+function Session({ script, progress, className, ...aria }: SessionProps) {
+  const visible = script.slice(0, Math.min(progress.line + 1, script.length));
+  const finished = progress.line >= script.length;
 
   return (
     <div className={cx("col-start-1 row-start-1 flex flex-col gap-1", className)} {...aria}>

@@ -13,6 +13,7 @@ const serviceLinks = [
   { key: "instagram", label: "Instagram", icon: "instagram" },
 ] as const satisfies ReadonlyArray<{ key: keyof Track["links"]; label: string; icon: IconName }>;
 
+const TOGGLE_ATTR = "data-player-toggle";
 const LINKS_PANEL_ID = "player-links";
 
 const controlClass =
@@ -78,9 +79,13 @@ export function MusicPlayer() {
     const audio = audioRef.current;
     if (!src || !audio) return;
     const gestures = ["pointerdown", "keydown", "touchend"] as const;
-    const retry = () => void audio.play().catch(() => {});
     const stopWaiting = () => gestures.forEach((type) => window.removeEventListener(type, retry));
-    audio.play().catch(() => gestures.forEach((type) => window.addEventListener(type, retry, { once: true })));
+    // The play button handles its own gesture: starting here too would make its click pause right away.
+    const retry = (event: Event) => {
+      if (event.target instanceof Element && event.target.closest(`[${TOGGLE_ATTR}]`)) return;
+      void audio.play().then(stopWaiting, () => {});
+    };
+    audio.play().catch(() => gestures.forEach((type) => window.addEventListener(type, retry)));
     return stopWaiting;
   }, [src]);
 
@@ -187,7 +192,7 @@ export function MusicPlayer() {
         <button type="button" className={controlClass} onClick={() => setMuted((m) => !m)} aria-pressed={!muted} aria-label={muted ? "Unmute" : "Mute"}>
           <Icon name={muted ? "volumeOff" : "volume"} size={20} />
         </button>
-        <button type="button" className={cx(controlClass, "bg-primary hover:bg-primary-hover")} onClick={toggle} aria-label={playing ? "Pause" : "Play"}>
+        <button type="button" className={cx(controlClass, "bg-primary hover:bg-primary-hover")} onClick={toggle} {...{ [TOGGLE_ATTR]: "" }} aria-label={playing ? "Pause" : "Play"}>
           <Icon name={playing ? "pause" : "play"} size={20} />
         </button>
         <button type="button" className={controlClass} onClick={next} aria-label="Next track">
