@@ -14,6 +14,7 @@ interface PageMetaOptions {
 export function pageMeta({ path, title, description = site.description }: PageMetaOptions): MetaDescriptor[] {
   const fullTitle = title ? `${title} · ${site.name}` : site.title;
   const url = new URL(path, site.url).toString();
+  const image = new URL(site.ogImage.path, site.url).toString(); // crawlers need an absolute URL
   return [
     { title: fullTitle },
     { name: "description", content: description },
@@ -23,6 +24,11 @@ export function pageMeta({ path, title, description = site.description }: PageMe
     { property: "og:title", content: fullTitle },
     { property: "og:description", content: description },
     { property: "og:url", content: url },
-    { name: "twitter:card", content: "summary" },
+    { property: "og:image", content: image },
+    { property: "og:image:width", content: String(site.ogImage.width) },
+    { property: "og:image:height", content: String(site.ogImage.height) },
+    { property: "og:image:alt", content: site.ogImage.alt },
+    { name: "twitter:card", content: "summary_large_image" },
+    { name: "twitter:image", content: image },
   ];
 }

@@ -6,6 +6,8 @@ export const site = {
   description:
     "Francesco \"Strx\" Strappini: project leader and full-stack developer with AI at the core of how he works. TypeScript, React, Node.js, PostgreSQL, Claude Code and agents.",
   email: "fstraps@gmail.com",
+  /** Social share card, 1200x630. Regenerate with `node scripts/og/generate.mjs`. */
+  ogImage: { path: "/og.png", width: 1200, height: 630, alt: "strx.it: project leader and AI-native full-stack developer" },
 } as const;
 
 export type SocialId = "telegram" | "linkedin" | "github" | "soundcloud" | "youtube";

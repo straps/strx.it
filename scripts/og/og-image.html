@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8" />
+<style>
+  /* Fonts come straight from node_modules so the image matches the site typography. */
+  @font-face {
+    font-family: "Inter";
+    src: url("../../node_modules/@fontsource-variable/inter/files/inter-latin-wght-normal.woff2");
+    font-weight: 100 900;
+  }
+  @font-face {
+    font-family: "JetBrains Mono";
+    src: url("../../node_modules/@fontsource-variable/jetbrains-mono/files/jetbrains-mono-latin-wght-normal.woff2");
+    font-weight: 100 800;
+  }
+  :root {
+    --bg: #020817;
+    --surface: #0d233f;
+    --border: #30425f;
+    --fg: #f8fafc;
+    --muted: #94a3b8;
+    --subtle: #96b9de;
+    --dot: #4a5c73;
+    --accent: #93c23d;
+    --link: #93c5fd;
+    --chip: #122454;
+    --primary: #2563eb;
+  }
+  * { box-sizing: border-box; margin: 0; }
+  body {
+    width: 1200px;
+    height: 630px;
+    overflow: hidden;
+    position: relative;
+    background:
+      radial-gradient(60% 55% at 88% 0%, color-mix(in oklab, var(--accent) 16%, transparent), transparent 70%),
+      radial-gradient(85% 75% at 12% 0%, color-mix(in oklab, var(--primary) 38%, transparent), transparent 75%),
+      linear-gradient(to bottom, color-mix(in oklab, var(--chip) 70%, var(--bg)), var(--bg));
+    color: var(--fg);
+    font-family: "Inter", sans-serif;
+  }
+  .wordmark {
+    position: absolute; left: 72px; top: 56px;
+    font: 700 40px "JetBrains Mono", monospace; letter-spacing: -0.02em;
+  }
+  .wordmark span { color: var(--accent); }
+  .copy { position: absolute; left: 72px; top: 150px; width: 610px; }
+  .nobreak { white-space: nowrap; }
+  h1 { font: 700 62px/1.1 "JetBrains Mono", monospace; letter-spacing: -0.03em; }
+  p { margin-top: 28px; font-size: 27px; line-height: 1.4; color: var(--muted); }
+  .terminal {
+    position: absolute; right: 72px; top: 110px; width: 430px;
+    background: var(--surface); border: 2px solid var(--border); border-radius: 18px; overflow: hidden;
+    font: 500 23px/1.55 "JetBrains Mono", monospace;
+  }
+  .bar { display: flex; align-items: center; gap: 10px; padding: 16px 22px; border-bottom: 2px solid var(--border); }
+  .bar i { width: 14px; height: 14px; border-radius: 50%; background: var(--dot); }
+  .bar b { margin-left: 8px; font-weight: 500; font-size: 17px; color: var(--subtle); }
+  .body { padding: 22px 26px 26px; }
+  .out { color: var(--subtle); padding-bottom: 10px; }
+  .prompt { color: var(--accent); }
+  .fox {
+    position: absolute; right: 64px; bottom: 44px; width: 276px; height: 225px;
+    background: url("../../public/pets/fox/idle.gif") center / contain no-repeat; image-rendering: pixelated;
+  }
+</style>
+<body>
+  <div class="wordmark">strx<span>.it</span></div>
+  <div class="copy">
+    <h1>Project leader and full-stack developer, <span class="nobreak">AI-native.</span></h1>
+    <p>I lead projects from idea to production and put AI to work on both.</p>
+  </div>
+  <div class="terminal">
+    <div class="bar"><i></i><i></i><i></i><b>strx@ubuntu: ~</b></div>
+    <div class="body">
+      <div><span class="prompt">$</span> whoami</div>
+      <div class="out">strx</div>
+      <div><span class="prompt">$</span> cat roles.txt</div>
+      <div class="out">project-leader<br />full-stack-developer<br />ai-native-builder</div>
+      <div><span class="prompt">$</span> _</div>
+    </div>
+  </div>
+  <div class="fox"></div>
+</body>
+</html>
