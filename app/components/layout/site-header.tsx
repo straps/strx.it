@@ -24,7 +24,7 @@ export function SiteHeader() {
       className={cx(
         "sticky top-0 z-50 border-b border-border transition-[background-color,box-shadow]",
         transition,
-        solid ? "bg-bg/90 shadow-[0_4px_16px_-8px_rgba(0,0,0,0.6)] backdrop-blur-md" : "bg-bg",
+        solid ? "bg-bg/90 shadow-[0_4px_16px_-8px_rgba(0,0,0,0.6)] backdrop-blur-md" : "bg-transparent",
       )}
     >
       <Container

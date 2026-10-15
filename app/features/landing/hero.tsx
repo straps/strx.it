@@ -7,7 +7,9 @@ import { Terminal } from "./terminal";
 
 export function Hero() {
   return (
-    <section id="top" aria-labelledby="hero-title">
+    <section id="top" aria-labelledby="hero-title" className="relative">
+      {/* Reaches up under the transparent header so there is no seam between the two. */}
+      <div aria-hidden="true" className="hero-glow absolute inset-x-0 -top-24 bottom-0 -z-10" />
       <Container className="flex flex-wrap items-center gap-12 pt-16 pb-16 md:pt-24 md:pb-22">
         <div className="flex min-w-0 flex-[1_1_460px] flex-col gap-6">
           <span className="self-start rounded-md bg-chip px-3.5 py-1.5 font-mono text-base font-semibold text-link">
