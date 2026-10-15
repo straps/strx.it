@@ -2,6 +2,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 
 import { Icon, type IconName } from "~/components/icons";
 import { cx } from "~/components/ui";
+import { PetLayer, type PetMood } from "~/features/pets/pet-layer";
 
 import tracks from "./tracks.json";
 
@@ -108,8 +109,12 @@ export function MusicPlayer() {
     return href ? [{ ...service, href }] : [];
   });
 
+  // The pet follows the music: asleep when paused, calm while muted, restless with the sound on.
+  const mood: PetMood = !playing ? "sleepy" : muted ? "calm" : "lively";
+
   return (
     <aside aria-label="Music player" className="fixed inset-x-0 bottom-0 z-40 border-t border-border bg-bg/90 backdrop-blur-md">
+      <PetLayer mood={mood} />
       <audio
         ref={audioRef}
         src={src}
