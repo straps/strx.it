@@ -8,7 +8,7 @@ export const site = {
   email: "fstraps@gmail.com",
 } as const;
 
-export type SocialId = "telegram" | "linkedin" | "soundcloud" | "youtube";
+export type SocialId = "telegram" | "linkedin" | "github" | "soundcloud" | "youtube";
 
 export interface SocialLink {
   id: SocialId;
@@ -29,6 +29,12 @@ export const socials: Record<SocialId, SocialLink> = {
     label: "LinkedIn",
     href: "https://www.linkedin.com/in/fstraps",
     caption: "linkedin.com/in/fstraps",
+  },
+  github: {
+    id: "github",
+    label: "GitHub",
+    href: "https://github.com/straps",
+    caption: "github.com/straps",
   },
   soundcloud: {
     id: "soundcloud",

@@ -117,6 +117,7 @@ export const links = {
   items: [
     { social: "telegram", icon: "send" },
     { social: "linkedin", icon: "linkedin" },
+    { social: "github", icon: "github" },
     { social: "soundcloud", icon: "audioLines" },
     { social: "youtube", icon: "youtube" },
   ] satisfies Array<{ social: SocialId; icon: IconName }>,
