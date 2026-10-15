@@ -13,6 +13,8 @@ const serviceLinks = [
   { key: "instagram", label: "Instagram", icon: "instagram" },
 ] as const satisfies ReadonlyArray<{ key: keyof Track["links"]; label: string; icon: IconName }>;
 
+const LINKS_PANEL_ID = "player-links";
+
 const controlClass =
   "inline-flex size-11 shrink-0 items-center justify-center rounded-full text-fg hover:bg-surface-hover";
 
@@ -40,6 +42,7 @@ export function MusicPlayer() {
   const [playing, setPlaying] = useState(false);
   const [muted, setMuted] = useState(true);
   const [time, setTime] = useState({ current: 0, total: 0 });
+  const [linksOpen, setLinksOpen] = useState(false);
 
   // Shuffle after mount: doing it during render would differ between server and client.
   useEffect(() => setQueue(shuffle(tracks)), []);
@@ -68,7 +71,19 @@ export function MusicPlayer() {
     if (audio) void (audio.paused ? audio.play() : audio.pause());
   };
 
+  useEffect(() => {
+    if (!linksOpen) return;
+    const onKey = (event: KeyboardEvent) => event.key === "Escape" && setLinksOpen(false);
+    document.addEventListener("keydown", onKey);
+    return () => document.removeEventListener("keydown", onKey);
+  }, [linksOpen]);
+
   if (!track) return null;
+
+  const links = serviceLinks.flatMap((service) => {
+    const href = track.links[service.key];
+    return href ? [{ ...service, href }] : [];
+  });
 
   return (
     <aside aria-label="Music player" className="fixed inset-x-0 bottom-0 z-40 border-t border-border bg-bg/90 backdrop-blur-md">
@@ -99,46 +114,59 @@ export function MusicPlayer() {
       />
 
       <div className="mx-auto flex max-w-site items-center gap-2 px-4 py-2 sm:gap-3 sm:px-6">
-        {track.cover ? (
-          <img src={track.cover} alt="" width={44} height={44} className="size-11 shrink-0 rounded-md object-cover" />
-        ) : (
-          <span aria-hidden="true" className="flex size-11 shrink-0 items-center justify-center rounded-md bg-chip text-accent">
-            <Icon name="audioLines" size={20} />
-          </span>
-        )}
-
-        <div className="mr-auto min-w-0">
-          <p className="truncate text-sm font-medium text-fg">{track.title}</p>
-          <p className="truncate font-mono text-xs text-muted">
-            strx
-            <span className="hidden sm:inline">
-              {" · "}
-              {formatTime(time.current)} / {time.total ? formatTime(time.total) : track.duration}
+        <button
+          type="button"
+          onClick={() => setLinksOpen((open) => !open)}
+          aria-expanded={linksOpen}
+          aria-controls={LINKS_PANEL_ID}
+          aria-label={`Links for ${track.title}`}
+          className="flex min-w-0 flex-1 items-center gap-3 text-left sm:pointer-events-none"
+        >
+          {track.cover ? (
+            <img src={track.cover} alt="" width={44} height={44} className="size-11 shrink-0 rounded-md object-cover" />
+          ) : (
+            <span aria-hidden="true" className="flex size-11 shrink-0 items-center justify-center rounded-md bg-chip text-accent">
+              <Icon name="audioLines" size={20} />
             </span>
-          </p>
-        </div>
+          )}
+          <span className="min-w-0">
+            <span className="block truncate text-sm font-medium text-fg">{track.title}</span>
+            <span className="block truncate font-mono text-xs text-muted">
+              strx
+              <span className="hidden sm:inline">
+                {" · "}
+                {formatTime(time.current)} / {time.total ? formatTime(time.total) : track.duration}
+              </span>
+            </span>
+          </span>
+        </button>
 
         <nav aria-label={`Listen to ${track.title}`} className="hidden items-center sm:flex">
-          {serviceLinks.map(({ key, label, icon }) => {
-            const href = track.links[key];
-            return (
-              href && (
-                <a
-                  key={key}
-                  href={href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={`${track.title} on ${label}`}
-                  title={label}
-                  className={cx(controlClass, "text-muted hover:text-fg")}
-                >
-                  <Icon name={icon} size={18} />
-                </a>
-              )
-            );
-          })}
+          {links.map(({ key, label, icon, href }) => (
+            <a
+              key={key}
+              href={href}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`${track.title} on ${label}`}
+              title={label}
+              className={cx(controlClass, "text-muted hover:text-fg")}
+            >
+              <Icon name={icon} size={18} />
+            </a>
+          ))}
         </nav>
 
+        <button
+          type="button"
+          className={cx(controlClass, "sm:hidden", linksOpen && "bg-surface-hover")}
+          onClick={() => setLinksOpen((open) => !open)}
+          aria-expanded={linksOpen}
+          aria-controls={LINKS_PANEL_ID}
+          aria-label={linksOpen ? "Hide links" : "Show links"}
+        >
+          <Icon name={linksOpen ? "close" : "arrowUpRight"} size={20} />
+        </button>
         <button type="button" className={controlClass} onClick={() => setMuted((m) => !m)} aria-pressed={!muted} aria-label={muted ? "Unmute" : "Mute"}>
           <Icon name={muted ? "volumeOff" : "volume"} size={20} />
         </button>
@@ -149,6 +177,27 @@ export function MusicPlayer() {
           <Icon name="skipForward" size={20} />
         </button>
       </div>
+
+      {linksOpen && (
+        <nav
+          id={LINKS_PANEL_ID}
+          aria-label={`Listen to ${track.title}`}
+          className="absolute inset-x-0 bottom-full flex flex-wrap gap-2 border-t border-border bg-bg px-4 py-3 shadow-[0_-12px_24px_-12px_rgba(0,0,0,0.7)] sm:hidden"
+        >
+          {links.map(({ key, label, icon, href }) => (
+            <a
+              key={key}
+              href={href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex min-h-11 items-center gap-2 rounded-full border border-border bg-surface px-4 text-sm text-fg hover:bg-surface-hover"
+            >
+              <Icon name={icon} size={18} />
+              {label}
+            </a>
+          ))}
+        </nav>
+      )}
     </aside>
   );
 }
