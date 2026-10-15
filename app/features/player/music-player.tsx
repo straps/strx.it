@@ -43,6 +43,7 @@ export function MusicPlayer() {
   const [muted, setMuted] = useState(true);
   const [time, setTime] = useState({ current: 0, total: 0 });
   const [linksOpen, setLinksOpen] = useState(false);
+  const [src, setSrc] = useState<string>();
 
   // Shuffle after mount: doing it during render would differ between server and client.
   useEffect(() => setQueue(shuffle(tracks)), []);
@@ -55,16 +56,33 @@ export function MusicPlayer() {
     setIndex(0);
   }, [index, queue]);
 
-  // Autoplay on every track change. If the browser refuses (autoplay policy), retry on the first user gesture.
+  // The static host answers without Range support, so the browser cannot seek in a streamed file
+  // (a seek restarts the track). Downloading the mp3 as a blob makes it freely seekable.
+  useEffect(() => {
+    if (!track) return;
+    const controller = new AbortController();
+    let objectUrl: string | undefined;
+    setSrc(undefined);
+    fetch(track.audio, { signal: controller.signal })
+      .then((response) => response.blob())
+      .then((blob) => setSrc((objectUrl = URL.createObjectURL(blob))))
+      .catch(() => {});
+    return () => {
+      controller.abort();
+      if (objectUrl) URL.revokeObjectURL(objectUrl);
+    };
+  }, [track]);
+
+  // Autoplay whenever a track is ready. If the browser refuses (autoplay policy), retry on the first user gesture.
   useEffect(() => {
     const audio = audioRef.current;
-    if (!track || !audio) return;
+    if (!src || !audio) return;
     const gestures = ["pointerdown", "keydown", "touchend"] as const;
     const retry = () => void audio.play().catch(() => {});
     const stopWaiting = () => gestures.forEach((type) => window.removeEventListener(type, retry));
     audio.play().catch(() => gestures.forEach((type) => window.addEventListener(type, retry, { once: true })));
     return stopWaiting;
-  }, [track]);
+  }, [src]);
 
   const toggle = () => {
     const audio = audioRef.current;
@@ -89,10 +107,9 @@ export function MusicPlayer() {
     <aside aria-label="Music player" className="fixed inset-x-0 bottom-0 z-40 border-t border-border bg-bg/90 backdrop-blur-md">
       <audio
         ref={audioRef}
-        src={track.audio}
+        src={src}
         muted={muted}
         autoPlay
-        preload="auto"
         onPlay={() => setPlaying(true)}
         onPause={() => setPlaying(false)}
         onEnded={next}

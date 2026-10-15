@@ -11,7 +11,7 @@ export const hero = {
   terminal: [
     { command: "whoami", output: ["strx"] },
     { command: "cat roles.txt", output: ["project-leader", "full-stack-developer", "ai-native-builder"] },
-    { command: 'claude "how do you work?"', output: ["plan → build → review → ship", "humans decide, agents accelerate"] },
+    { command: 'claude -p "how do you work?"', output: ["plan → build → review → ship", "humans decide, agents accelerate"] },
   ],
 };
 

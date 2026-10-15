@@ -15,6 +15,8 @@ interface Progress {
 
 const START: Progress = { line: 0, chars: 0, output: false };
 const DONE: Progress = { line: hero.terminal.length, chars: 0, output: false };
+/** Typed at the final prompt to wipe the screen before the session replays. */
+const CLEAR_COMMAND = "clear";
 
 const timing = {
   start: 600,
@@ -27,11 +29,15 @@ const timing = {
   enter: 280,
   /** Pause after the output before the next prompt. */
   read: 450,
+  /** How long the finished session stays on screen before `clear` is typed. */
+  idle: 10_000,
+  /** Blank screen after `clear`, before the session restarts. */
+  cleared: 800,
 };
 
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
-/** Plays the scripted session once on mount; jumps to the end when the user prefers reduced motion. */
+/** Plays the scripted session on mount, then clears the screen and replays it in a loop; jumps to the end when the user prefers reduced motion. */
 function useTypingSession(lines: readonly TerminalLine[]) {
   const [progress, setProgress] = useState<Progress>(START);
 
@@ -48,17 +54,25 @@ function useTypingSession(lines: readonly TerminalLine[]) {
       await sleep(delay);
     };
 
+    const typeCommand = async (command: string, at: (chars: number) => Progress) => {
+      for (let chars = 1; chars <= command.length; chars++) {
+        await step(at(chars), timing.key + ((chars * 37) % timing.jitter));
+      }
+      await sleep(timing.enter);
+    };
+
     (async () => {
       await sleep(timing.start);
-      for (const [line, { command }] of lines.entries()) {
-        await step({ line, chars: 0, output: false }, timing.think);
-        for (let chars = 1; chars <= command.length; chars++) {
-          await step({ line, chars, output: false }, timing.key + ((chars * 37) % timing.jitter));
+      while (!cancelled) {
+        for (const [line, { command }] of lines.entries()) {
+          await step({ line, chars: 0, output: false }, timing.think);
+          await typeCommand(command, (chars) => ({ line, chars, output: false }));
+          await step({ line, chars: command.length, output: true }, timing.read);
         }
-        await sleep(timing.enter);
-        await step({ line, chars: command.length, output: true }, timing.read);
+        await step(DONE, timing.idle);
+        await typeCommand(CLEAR_COMMAND, (chars) => ({ ...DONE, chars }));
+        await step(START, timing.cleared);
       }
-      await step(DONE, 0);
     })();
 
     return () => {
@@ -124,7 +138,8 @@ function Session({ progress, className, ...aria }: SessionProps) {
       })}
       {finished && (
         <div>
-          <Prompt /> <Cursor />
+          <Prompt /> {CLEAR_COMMAND.slice(0, progress.chars)}
+          <Cursor key={progress.chars} />
         </div>
       )}
     </div>
