@@ -12,12 +12,15 @@ const MOBILE_MENU_ID = "mobile-menu";
 /** Matches Tailwind's `md` breakpoint, where the inline nav replaces the hamburger. */
 const DESKTOP_QUERY = "(min-width: 48rem)";
 
-/** Sticky header that compacts once scrolled; below `md` the nav collapses into a hamburger menu. */
-export function SiteHeader() {
+/**
+ * Sticky header that compacts once scrolled; below `md` the nav collapses into a hamburger menu.
+ * It is transparent over the hero until scrolled; `opaque` keeps the background on pages without a hero.
+ */
+export function SiteHeader({ opaque = false }: { opaque?: boolean }) {
   const scrolled = useScrolled();
   const [menuOpen, setMenuOpen] = useMobileMenu();
   const closeMenu = () => setMenuOpen(false);
-  const solid = scrolled || menuOpen;
+  const solid = opaque || scrolled || menuOpen;
 
   return (
     <header

@@ -10,6 +10,10 @@
 		"enabled": true
 	},
 	"upload_source_maps": true,
+	// Snapshot of the MT5 accounts, published by the local collector (never committed).
+	"kv_namespaces": [{ "binding": "TRADING_KV", "id": "67ba75c94cc24f6c8e24f6840207117f" }],
+	// Cloudflare Access application that protects /trading-accounts: fill both to open the page, empty = always 404.
+	"vars": { "ACCESS_TEAM_DOMAIN": "", "ACCESS_AUD": "" },
 	"workers_dev": true,
 	"preview_urls": true,
 	"routes": [

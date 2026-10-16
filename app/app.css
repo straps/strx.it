@@ -20,6 +20,9 @@
   --color-chip: #122454;
   --color-primary: #2563eb;
   --color-primary-hover: #3b82f6;
+  --color-gain: #5ed296;
+  --color-loss: #f06e5f;
+  --color-warn: #e8b85c;
 
   --container-site: 1120px;
 
