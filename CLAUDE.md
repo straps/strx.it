@@ -71,6 +71,10 @@ Public preview of a local server: `cloudflared tunnel --url http://localhost:417
 - Generated files not to commit: `build/`, `.react-router/`, `.wrangler/`, `worker-configuration.d.ts` (already gitignored).
 - Secrets: `.dev.vars` locally (gitignored), `wrangler secret put` or dashboard variables in production.
 
+## Analytics
+
+- Cloudflare Web Analytics (cookieless, no consent banner): beacon script in `app/root.tsx`, production builds only. The site token in `app/lib/site.ts` is public by design. No custom events; if they are ever needed, GoatCounter was the alternative considered.
+
 ## Cloudflare access
 
 - Deploy and API credentials live in the gitignored `.env`; Wrangler loads it by itself (no `wrangler login` needed). Never copy credential values into committed files, docs or logs.

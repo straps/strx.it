@@ -11,6 +11,7 @@ import type { Route } from "./+types/root";
 import "./app.css";
 
 import { ButtonLink, Container, Eyebrow } from "./components/ui";
+import { site } from "./lib/site";
 
 export const links: Route.LinksFunction = () => [
   { rel: "icon", href: "/favicon.svg", type: "image/svg+xml" },
@@ -30,6 +31,14 @@ export function Layout({ children }: { children: React.ReactNode }) {
         {children}
         <ScrollRestoration />
         <Scripts />
+        {/* Cookieless analytics; production builds only, so local work never counts as a visit. */}
+        {import.meta.env.PROD && (
+          <script
+            defer
+            src="https://static.cloudflareinsights.com/beacon.min.js"
+            data-cf-beacon={JSON.stringify({ token: site.analyticsToken })}
+          />
+        )}
       </body>
     </html>
   );
