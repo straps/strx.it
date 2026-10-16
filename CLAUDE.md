@@ -39,7 +39,7 @@ Public preview of a local server: `cloudflared tunnel --url http://localhost:417
 - `app/routes.ts`: all routes nest inside `layout("routes/site-layout.tsx", [...])` so they share `SiteHeader`/`SiteFooter`.
 - `app/features/<section>/`: section-specific components. Copy lives in `content.ts`, separate from markup.
 - `app/components/ui.tsx`: shared primitives (`Container`, `Section`, `SectionHeader`, `Eyebrow`, `ButtonLink`, `ExternalLink`, `IconTile`, `cardClass`, `cx`). Reuse them; extend here instead of duplicating class strings.
-- `app/features/player/`: fixed bottom music player (random order, autoplays muted). Tracks live in `tracks.json` + `public/music/`, both generated from the local library (`~/mega/suno`) by `node scripts/sync-music.mjs`: rerun it to add a track, never edit them by hand.
+- `app/features/player/`: fixed bottom music player (random order, no autoplay: nothing is downloaded until the visitor presses play, next or picks a track in the modal list, newest release first). Tracks live in `tracks.json` + `public/music/`, both generated from the local library (`~/mega/suno`) by `node scripts/sync-music.mjs`: rerun it to add a track, never edit them by hand.
 - `app/lib/site.ts`: identity, email, social links, nav items. Single place to change a URL.
 - `app/lib/meta.ts`: `pageMeta({ path, title?, description? })` for every route's `meta` export (title, description, canonical, Open Graph).
 - Path alias `~/*` → `app/*`.

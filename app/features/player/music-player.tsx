@@ -4,9 +4,13 @@ import { Icon, type IconName } from "~/components/icons";
 import { cx } from "~/components/ui";
 import { PetLayer, type PetMood } from "~/features/pets/pet-layer";
 
+import { TrackPicker } from "./track-picker";
 import tracks from "./tracks.json";
 
 type Track = (typeof tracks)[number];
+
+/** Newest release first. */
+const library = [...tracks].sort((a, b) => (b.publishedAt ?? "").localeCompare(a.publishedAt ?? ""));
 
 const serviceLinks = [
   { key: "youtube", label: "YouTube", icon: "youtube" },
@@ -14,7 +18,6 @@ const serviceLinks = [
   { key: "instagram", label: "Instagram", icon: "instagram" },
 ] as const satisfies ReadonlyArray<{ key: keyof Track["links"]; label: string; icon: IconName }>;
 
-const TOGGLE_ATTR = "data-player-toggle";
 const LINKS_PANEL_ID = "player-links";
 
 const controlClass =
@@ -36,23 +39,30 @@ function formatTime(seconds: number) {
   return `${Math.floor(total / 60)}:${String(total % 60).padStart(2, "0")}`;
 }
 
-/** Fixed bottom player: random track order, starts playing muted (the only autoplay browsers allow). */
+/**
+ * Fixed bottom player, random track order. No autoplay: nothing is downloaded until the visitor asks for
+ * music (play, next or the track list), so the mp3 never competes with the page for bandwidth while it loads.
+ */
 export function MusicPlayer() {
   const audioRef = useRef<HTMLAudioElement>(null);
+  const pickerRef = useRef<HTMLDialogElement>(null);
   const [queue, setQueue] = useState<Track[]>([]);
   const [index, setIndex] = useState(0);
   const [playing, setPlaying] = useState(false);
-  const [muted, setMuted] = useState(true);
   const [time, setTime] = useState({ current: 0, total: 0 });
   const [linksOpen, setLinksOpen] = useState(false);
   const [src, setSrc] = useState<string>();
+  /** The visitor asked for music: tracks are fetched and played from now on. */
+  const [started, setStarted] = useState(false);
 
   // Shuffle after mount: doing it during render would differ between server and client.
   useEffect(() => setQueue(shuffle(tracks)), []);
 
   const track = queue[index];
+  const loading = started && !src;
 
   const next = useCallback(() => {
+    setStarted(true);
     if (index + 1 < queue.length) return setIndex(index + 1);
     setQueue(shuffle(tracks, queue[index]?.id));
     setIndex(0);
@@ -61,7 +71,7 @@ export function MusicPlayer() {
   // The static host answers without Range support, so the browser cannot seek in a streamed file
   // (a seek restarts the track). Downloading the mp3 as a blob makes it freely seekable.
   useEffect(() => {
-    if (!track) return;
+    if (!track || !started) return;
     const controller = new AbortController();
     let objectUrl: string | undefined;
     setSrc(undefined);
@@ -73,26 +83,26 @@ export function MusicPlayer() {
       controller.abort();
       if (objectUrl) URL.revokeObjectURL(objectUrl);
     };
-  }, [track]);
+  }, [track, started]);
 
-  // Autoplay whenever a track is ready. If the browser refuses (autoplay policy), retry on the first user gesture.
+  // Play as soon as a track is ready. The request came from a click, so the browser allows it with sound.
   useEffect(() => {
-    const audio = audioRef.current;
-    if (!src || !audio) return;
-    const gestures = ["pointerdown", "keydown", "touchend"] as const;
-    const stopWaiting = () => gestures.forEach((type) => window.removeEventListener(type, retry));
-    // The play button handles its own gesture: starting here too would make its click pause right away.
-    const retry = (event: Event) => {
-      if (event.target instanceof Element && event.target.closest(`[${TOGGLE_ATTR}]`)) return;
-      void audio.play().then(stopWaiting, () => {});
-    };
-    audio.play().catch(() => gestures.forEach((type) => window.addEventListener(type, retry)));
-    return stopWaiting;
+    if (src) audioRef.current?.play().catch(() => {});
   }, [src]);
+
+  /** Plays the chosen track now; the rest of the queue stays random. */
+  const pick = (id: string) => {
+    const chosen = tracks.find((candidate) => candidate.id === id);
+    if (!chosen) return;
+    setQueue([chosen, ...shuffle(tracks.filter((candidate) => candidate.id !== id))]);
+    setIndex(0);
+    setStarted(true);
+  };
 
   const toggle = () => {
     const audio = audioRef.current;
-    if (audio) void (audio.paused ? audio.play() : audio.pause());
+    if (!started) return setStarted(true); // first press: download, then the effect above plays
+    if (audio && src) void (audio.paused ? audio.play() : audio.pause());
   };
 
   useEffect(() => {
@@ -109,17 +119,16 @@ export function MusicPlayer() {
     return href ? [{ ...service, href }] : [];
   });
 
-  // The pet follows the music: asleep when paused, calm while muted, restless with the sound on.
-  const mood: PetMood = !playing ? "sleepy" : muted ? "calm" : "lively";
+  // The pet follows the music: asleep when paused, restless while it plays.
+  const mood: PetMood = playing ? "lively" : "sleepy";
 
   return (
     <aside aria-label="Music player" className="fixed inset-x-0 bottom-0 z-40 border-t border-border bg-bg/90 backdrop-blur-md">
       <PetLayer mood={mood} />
+      <TrackPicker dialogRef={pickerRef} tracks={library} currentId={started ? track.id : undefined} onSelect={pick} />
       <audio
         ref={audioRef}
         src={src}
-        muted={muted}
-        autoPlay
         onPlay={() => setPlaying(true)}
         onPause={() => setPlaying(false)}
         onEnded={next}
@@ -194,11 +203,23 @@ export function MusicPlayer() {
         >
           <Icon name={linksOpen ? "close" : "arrowUpRight"} size={20} />
         </button>
-        <button type="button" className={controlClass} onClick={() => setMuted((m) => !m)} aria-pressed={!muted} aria-label={muted ? "Unmute" : "Mute"}>
-          <Icon name={muted ? "volumeOff" : "volume"} size={20} />
+        <button
+          type="button"
+          className={controlClass}
+          onClick={() => pickerRef.current?.showModal()}
+          aria-haspopup="dialog"
+          aria-label="Choose a track"
+        >
+          <Icon name="listMusic" size={20} />
         </button>
-        <button type="button" className={cx(controlClass, "bg-primary hover:bg-primary-hover")} onClick={toggle} {...{ [TOGGLE_ATTR]: "" }} aria-label={playing ? "Pause" : "Play"}>
-          <Icon name={playing ? "pause" : "play"} size={20} />
+        <button
+          type="button"
+          className={cx(controlClass, "bg-primary hover:bg-primary-hover")}
+          onClick={toggle}
+          aria-busy={loading}
+          aria-label={loading ? "Loading" : playing ? "Pause" : "Play"}
+        >
+          <Icon name={loading ? "loader" : playing ? "pause" : "play"} size={20} className={loading ? "motion-safe:animate-spin" : undefined} />
         </button>
         <button type="button" className={controlClass} onClick={next} aria-label="Next track">
           <Icon name="skipForward" size={20} />

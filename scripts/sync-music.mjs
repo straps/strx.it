@@ -33,6 +33,7 @@ const tracks = readdirSync(source, { withFileTypes: true })
       id: folder,
       title: info.title,
       duration: info.duration,
+      publishedAt: youtube?.full?.uploadedAt ?? null, // upload of the full video on YouTube: the release date
       audio: `/music/${folder}.mp3`,
       cover: cover ? `/music/${folder}.jpg` : null,
       links: {

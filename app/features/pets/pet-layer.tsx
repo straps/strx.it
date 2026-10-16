@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 
 import { type Action, type PetDef, pickPet, preloadPet, spriteUrl } from "./pets";
 
-export type PetMood = "sleepy" | "calm" | "lively";
+export type PetMood = "sleepy" | "lively";
 type Phase = "roam" | "leaving" | "arriving";
 
 /** Horizontal speed in px/s. */
@@ -14,10 +14,9 @@ const duration: Record<Exclude<Action, "swipe">, readonly [number, number]> = {
   run: [1200, 3000],
   lie: [6000, 14000],
 };
-/** Relative odds of the next action, per mood: asleep when the music is paused, wild when it is loud. */
+/** Relative odds of the next action, per mood: asleep when the music is paused, restless while it plays. */
 const weights: Record<PetMood, Partial<Record<Action, number>>> = {
   sleepy: { lie: 5, idle: 2, walk: 1 },
-  calm: { walk: 4, idle: 2, swipe: 1, run: 1, lie: 1 },
   lively: { run: 4, walk: 3, swipe: 2, idle: 1 },
 };
 /** A pet stays this long (ms [min, max]) before walking off and being replaced by another one. */
