@@ -48,6 +48,9 @@ function Hero({ snapshot }: { snapshot: AurumSnapshot }) {
             <ButtonLink href="#live" variant="outline">
               See the numbers
             </ButtonLink>
+            <ButtonLink href="/aurum/accounts" variant="outline">
+              Every account
+            </ButtonLink>
           </div>
         </div>
 
@@ -116,6 +119,10 @@ export function AurumPage({ snapshot }: { snapshot: AurumSnapshot }) {
           {snapshot.broker} · {snapshot.platform} · {snapshot.instrument} · EA v{snapshot.ea_version}
           {live && ` · data to ${dateLabel(live.updated)}`}
         </p>
+        <a href="/aurum/accounts" className="inline-flex items-center gap-2 self-start font-mono text-sm text-link no-underline hover:underline">
+          Aurum also runs on prop-firm accounts: see every account
+          <Icon name="arrowUpRight" />
+        </a>
       </Section>
 
       <Section id="how" eyebrow={aurum.how.eyebrow} title={aurum.how.title}>
