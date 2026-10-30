@@ -52,6 +52,12 @@ Public preview of a local server: `cloudflared tunnel --url http://localhost:417
 4. Needs data/bindings → add a `loader`, declare bindings in `wrangler.jsonc`, run `npm run cf-typegen`, read them via `import { env } from "cloudflare:workers"`.
 5. Add a nav entry in `navItems` if it belongs in the header. Nav hrefs are absolute (`/#skills`) so they work from any page.
 
+### /aurum (public)
+
+- Public page for the Aurum Switch gold signal (`app/features/aurum/`, `app/routes/aurum.tsx`), SSR with a 1-hour edge cache.
+- Reads KV `aurum/public` (same `TRADING_KV` namespace as /trading-accounts). Account-level statistics only: growth without deposits, drawdown, monthly returns, equity curve, current regime, backtest summary. Never trades or positions.
+- Published every Monday 08:30 by `~/.hermes/scripts/aurum_macro/aurum_public.py` (Hermes cron), from the EA equity journal (one row per hour while gold trades).
+
 ## Conventions
 
 - Code, identifiers, comments, commits in English. Commit format: `"strx.it, Topic, exhaustive description"`. No Co-Authored-By.
