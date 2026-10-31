@@ -57,6 +57,7 @@ Public preview of a local server: `cloudflared tunnel --url http://localhost:417
 - Public page for the Aurum Switch gold signal (`app/features/aurum/`, `app/routes/aurum.tsx`), SSR with a 1-hour edge cache.
 - Reads KV `aurum/public` (same `TRADING_KV` namespace as /trading-accounts). Account-level statistics only: growth without deposits, drawdown, monthly returns, equity curve, current regime, backtest summary. Never trades or positions.
 - Published every Monday 08:30 by `~/.hermes/scripts/aurum_macro/aurum_public.py` (Hermes cron), from the EA equity journal (one row per hour while gold trades).
+- `/aurum/accounts`: status of every account running an Aurum EA (own account and prop evaluations), from KV `aurum/accounts`, published every Monday 08:30 by `~/.hermes/scripts/aurum_macro/aurum_accounts.py` (same cron). Masked logins, account-level numbers only (balance, result since Aurum took over, target progress, loss-limit room, weekly history), never trades or positions.
 
 ## Conventions
 
