@@ -27,6 +27,9 @@ export interface AurumAccount {
   pnl_pct?: number | null;
   target?: number | null;
   target_progress_pct?: number | null;
+  target_pct?: number | null;
+  target_note?: string;
+  initial?: number | null;
   loss_floor?: number | null;
   loss_room?: number | null;
   loss_room_pct?: number | null;
