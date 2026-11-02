@@ -81,10 +81,20 @@ function AccountCard({ a }: { a: AurumAccount }) {
               {a.target != null && (
                 <div className="flex flex-col gap-1">
                   <div className="flex justify-between text-muted">
-                    <span>to target {money(a.target, a.currency)}</span>
+                    <span>
+                      {a.target_note ?? "profit target"}{" "}
+                      <span className="text-fg">{money(a.target, a.currency)}</span>
+                      {a.target_pct != null && <span> (+{a.target_pct}%)</span>}
+                    </span>
                     <span>{(a.target_progress_pct ?? 0).toFixed(0)}%</span>
                   </div>
                   <Bar value={a.target_progress_pct ?? 0} className="bg-gain" />
+                  {a.balance != null && a.target != null && (
+                    <span className="text-muted">
+                      {a.balance >= a.target ? "reached" : `${money(a.target - a.balance, a.currency)} to go`}
+                      {a.initial != null && ` · started at ${money(a.initial, a.currency)}`}
+                    </span>
+                  )}
                 </div>
               )}
               {a.loss_room != null && (
@@ -110,6 +120,18 @@ function AccountCard({ a }: { a: AurumAccount }) {
                 <span className="text-muted">from peak now</span>
                 <span>{a.dd_now_pct != null ? `${a.dd_now_pct.toFixed(1)}%` : "—"}</span>
               </div>
+              {a.balance != null && (
+                <div className="flex flex-col">
+                  <span className="text-muted">balance</span>
+                  <span>{money(a.balance, a.currency)}</span>
+                </div>
+              )}
+              {a.equity != null && (
+                <div className="flex flex-col">
+                  <span className="text-muted">equity</span>
+                  <span>{money(a.equity, a.currency)}</span>
+                </div>
+              )}
               {a.note && <p className="col-span-2 m-0 text-muted">{a.note}</p>}
             </div>
           )}
@@ -135,7 +157,7 @@ export function AccountsPage({ snapshot }: { snapshot: AurumAccountsSnapshot }) 
             Every Aurum account
           </h1>
           <p className="m-0 max-w-160 text-xl text-muted">
-            The Aurum family runs on one own account and several prop-firm accounts, each with its own rules and its own
+            The Aurum family runs on two own accounts (gold on TopFX, multi-asset on IC Markets) and several prop-firm accounts, each with its own rules and its own
             variant. The same numbers, good or bad, updated every Monday morning.
           </p>
           <div className="grid grid-cols-[repeat(auto-fit,minmax(min(150px,100%),1fr))] gap-4">
