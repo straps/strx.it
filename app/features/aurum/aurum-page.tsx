@@ -139,7 +139,34 @@ export function AurumPage({ snapshot }: { snapshot: AurumSnapshot }) {
         </div>
       </Section>
 
-      <Section id="backtest" eyebrow={aurum.backtest.eyebrow} title={aurum.backtest.title} intro={aurum.backtest.intro} className="bg-surface">
+      <Section id="forex" eyebrow={aurum.forex.eyebrow} title={aurum.forex.title} intro={aurum.forex.intro} className="bg-surface">
+        <div className="grid grid-cols-[repeat(auto-fit,minmax(min(240px,100%),1fr))] gap-6">
+          {aurum.forex.rules.map((item) => (
+            <article key={item.title} className={cx(cardClass, "flex flex-col gap-3 bg-bg")}>
+              <div className="flex size-10 items-center justify-center rounded-md bg-chip text-link">
+                <Icon name={item.icon} size={20} />
+              </div>
+              <h3 className="m-0 text-lg font-semibold">{item.title}</h3>
+              <p className="m-0 text-sm text-muted">{item.text}</p>
+            </article>
+          ))}
+        </div>
+        <div className="flex flex-wrap gap-2">
+          {aurum.forex.pairs.map((p) => (
+            <span key={p} className="rounded-md bg-chip px-2.5 py-1 font-mono text-xs text-link">
+              {p}
+            </span>
+          ))}
+        </div>
+        <div className="grid grid-cols-[repeat(auto-fit,minmax(min(180px,100%),1fr))] gap-4">
+          {aurum.forex.stats.map((s) => (
+            <Stat key={s.label} label={s.label} value={s.value} className={s.tone === "gain" ? "text-gain" : undefined} />
+          ))}
+        </div>
+        <p className="m-0 text-xs text-muted">{aurum.forex.note}</p>
+      </Section>
+
+      <Section id="backtest" eyebrow={aurum.backtest.eyebrow} title={aurum.backtest.title} intro={aurum.backtest.intro}>
         <div className="grid grid-cols-[repeat(auto-fit,minmax(min(180px,100%),1fr))] gap-4">
           <Stat label={bt.period} value={pct(bt.growth_pct, 0)} className="text-gain" />
           <Stat label="per year (cagr)" value={pct(bt.cagr_pct)} className="text-gain" />
