@@ -27,6 +27,8 @@ export interface AurumAccount {
   pnl_pct?: number | null;
   target?: number | null;
   target_progress_pct?: number | null;
+  /** Page order (Francesco 03/11/2026): 0 own, 1 funded, 2 last step before funding, 3 first step of a 2-step. */
+  stage_rank?: number;
   target_pct?: number | null;
   target_note?: string;
   initial?: number | null;

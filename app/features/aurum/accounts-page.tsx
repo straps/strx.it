@@ -144,7 +144,11 @@ function AccountCard({ a }: { a: AurumAccount }) {
 export function AccountsPage({ snapshot }: { snapshot: AurumAccountsSnapshot }) {
   const s = snapshot.summary;
   const order: AccountStatus[] = ["running", "target reached", "starting", "limit breached", "closed", "no data"];
-  const accounts = [...snapshot.accounts].sort((a, b) => order.indexOf(a.status) - order.indexOf(b.status));
+  // Order: own accounts, then prop funded, then the last step before funding, then step 1 of a 2-step
+  // (stage_rank from the publisher, aurum_accounts.py); inside a stage, by status.
+  const accounts = [...snapshot.accounts].sort(
+    (a, b) => (a.stage_rank ?? 9) - (b.stage_rank ?? 9) || order.indexOf(a.status) - order.indexOf(b.status),
+  );
   return (
     <>
       <section aria-labelledby="accounts-title" className="relative">
@@ -157,7 +161,7 @@ export function AccountsPage({ snapshot }: { snapshot: AurumAccountsSnapshot }) 
             Every Aurum account
           </h1>
           <p className="m-0 max-w-160 text-xl text-muted">
-            The Aurum family runs on two own accounts (gold on TopFX, multi-asset on IC Markets) and several prop-firm accounts, each with its own rules and its own
+            The Aurum family runs on three own accounts (gold on TopFX, two multi-asset accounts on IC Markets) and several prop-firm accounts, each with its own rules and its own
             variant. The same numbers, good or bad, updated every Monday morning.
           </p>
           <div className="grid grid-cols-[repeat(auto-fit,minmax(min(150px,100%),1fr))] gap-4">
