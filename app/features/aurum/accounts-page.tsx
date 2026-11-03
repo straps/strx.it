@@ -144,7 +144,11 @@ function AccountCard({ a }: { a: AurumAccount }) {
 export function AccountsPage({ snapshot }: { snapshot: AurumAccountsSnapshot }) {
   const s = snapshot.summary;
   const order: AccountStatus[] = ["running", "target reached", "starting", "limit breached", "closed", "no data"];
-  const accounts = [...snapshot.accounts].sort((a, b) => order.indexOf(a.status) - order.indexOf(b.status));
+  // Order: own accounts, then prop funded, then the last step before funding, then step 1 of a 2-step
+  // (stage_rank from the publisher, aurum_accounts.py); inside a stage, by status.
+  const accounts = [...snapshot.accounts].sort(
+    (a, b) => (a.stage_rank ?? 9) - (b.stage_rank ?? 9) || order.indexOf(a.status) - order.indexOf(b.status),
+  );
   return (
     <>
       <section aria-labelledby="accounts-title" className="relative">
