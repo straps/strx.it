@@ -1,4 +1,4 @@
-/** Snapshot of every account running an Aurum EA, published to KV `aurum/accounts` every Monday
+/** Snapshot of every account running an Aurum EA, published to KV `aurum/accounts` three times a day (8, 14, 20)
  * by ~/.hermes/scripts/aurum_macro/aurum_accounts.py. Account-level numbers only. */
 export const AURUM_ACCOUNTS_SCHEMA_VERSION = 1;
 
@@ -29,6 +29,8 @@ export interface AurumAccount {
   target_progress_pct?: number | null;
   /** Page order (Francesco 03/11/2026): 0 own, 1 funded, 2 last step before funding, 3 first step of a 2-step. */
   stage_rank?: number;
+  /** Public copy-trading pages (account-info.json copy_trading, active only): MQL5 signal and other platforms. */
+  copy?: { platform: string; url: string; label: string }[];
   target_pct?: number | null;
   target_note?: string;
   initial?: number | null;
