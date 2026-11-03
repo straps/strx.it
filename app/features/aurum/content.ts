@@ -38,7 +38,7 @@ export const aurum = {
   live: {
     eyebrow: "live account",
     title: "Real money, real broker",
-    intro: "A TopFX account on MetaTrader 4, updated every Monday morning. Growth excludes deposits and withdrawals, like MQL5 signals.",
+    intro: "A TopFX account on MetaTrader 4, updated three times a day (8:00, 14:00 and 20:00 CET). Growth excludes deposits and withdrawals, like MQL5 signals.",
   },
 
   backtest: {
