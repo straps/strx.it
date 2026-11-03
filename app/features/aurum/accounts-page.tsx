@@ -137,6 +137,17 @@ function AccountCard({ a }: { a: AurumAccount }) {
           )}
         </>
       )}
+
+      {a.copy && a.copy.length > 0 && (
+        <footer className="mt-auto flex flex-wrap justify-center gap-2 border-t border-border pt-4">
+          {a.copy.map((c) => (
+            <ButtonLink key={c.url} href={c.url} target="_blank" rel="noopener noreferrer" title={`${c.label} on ${c.platform}`}>
+              {c.label}
+              {a.copy!.length > 1 && <span className="font-mono text-xs opacity-80"> · {c.platform}</span>}
+            </ButtonLink>
+          ))}
+        </footer>
+      )}
     </article>
   );
 }
@@ -162,7 +173,7 @@ export function AccountsPage({ snapshot }: { snapshot: AurumAccountsSnapshot }) 
           </h1>
           <p className="m-0 max-w-160 text-xl text-muted">
             The Aurum family runs on three own accounts (gold on TopFX, two multi-asset accounts on IC Markets) and several prop-firm accounts, each with its own rules and its own
-            variant. The same numbers, good or bad, updated every Monday morning.
+            variant. The same numbers, good or bad, updated three times a day (8:00, 14:00 and 20:00 CET).
           </p>
           <div className="grid grid-cols-[repeat(auto-fit,minmax(min(150px,100%),1fr))] gap-4">
             {[
