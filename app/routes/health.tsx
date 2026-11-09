@@ -1,5 +1,6 @@
 import { env } from "cloudflare:workers";
 
+import { Container } from "~/components/ui";
 import { HealthPage } from "~/features/health/health-page";
 import { HEALTH_SCHEMA_VERSION, type HealthSnapshot } from "~/features/health/types";
 import { requireHealthKey } from "~/lib/health-key.server";
@@ -21,15 +22,11 @@ export async function loader({ request }: Route.LoaderArgs) {
 export default function Health({ loaderData: { snapshot } }: Route.ComponentProps) {
   if (!snapshot || snapshot.schema_version !== HEALTH_SCHEMA_VERSION) {
     return (
-      <main className="mx-auto flex min-h-dvh max-w-site flex-col justify-center gap-3 px-6 py-16">
+      <Container className="flex flex-col gap-3 py-24">
         <h1 className="m-0 text-2xl font-semibold">No data yet</h1>
         <p className="m-0 text-muted">The publisher has not uploaded a snapshot.</p>
-      </main>
+      </Container>
     );
   }
-  return (
-    <main>
-      <HealthPage snapshot={snapshot} />
-    </main>
-  );
+  return <HealthPage snapshot={snapshot} />;
 }
