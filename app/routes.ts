@@ -9,4 +9,5 @@ import { type RouteConfig, index, layout, route } from "@react-router/dev/routes
 export default [
   layout("routes/site-layout.tsx", [index("routes/home.tsx"), route("aurum", "routes/aurum.tsx"), route("aurum/accounts", "routes/aurum-accounts.tsx")]),
   route("trading-accounts", "routes/trading-accounts.tsx"),
+  route("health", "routes/health.tsx"),
 ] satisfies RouteConfig;

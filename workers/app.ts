@@ -6,7 +6,7 @@ const requestHandler = createRequestHandler(
 );
 
 /** Private pages: never cached by the edge or the browser, never indexed. */
-const PRIVATE_PATH = /^\/trading-accounts(\/|\.data$|$)/;
+const PRIVATE_PATH = /^\/(trading-accounts|health)(\/|\.data$|$)/;
 
 export default {
   async fetch(request) {
