@@ -59,6 +59,12 @@ Public preview of a local server: `cloudflared tunnel --url http://localhost:417
 - Published every Monday 08:30 by `~/.hermes/scripts/aurum_macro/aurum_public.py` (Hermes cron), from the EA equity journal (one row per hour while gold trades).
 - `/aurum/accounts`: status of every account running an Aurum EA (own account and prop evaluations), from KV `aurum/accounts`, published every Monday 08:30 by `~/.hermes/scripts/aurum_macro/aurum_accounts.py` (same cron). Masked logins, account-level numbers only (balance, result since Aurum took over, target progress, loss-limit room, weekly history), never trades or positions.
 
+### /health (private)
+
+- Private health log (`app/features/health/`, `app/routes/health.tsx`), inside the shared site layout (header, footer), `noindex`, `private, no-store`. Answers **404** unless the request carries `?k=<HEALTH_KEY>` (Worker secret, checked in constant time by `app/lib/health-key.server.ts`; no secret = always 404). Never put the key in the repo.
+- Reads KV `health/latest` (same `TRADING_KV` namespace). Daily aggregates only (active minutes, steps, sleep, alcohol units, cigarette packs, meal score, weight, waist): no symptoms, notes or free text.
+- Published twice a week by `~/.hermes/scripts/health/health_publish.mjs` (Hermes cron) from the local Postgres `health` database.
+
 ## Conventions
 
 - Code, identifiers, comments, commits in English. Commit format: `"strx.it, Topic, exhaustive description"`. No Co-Authored-By.
