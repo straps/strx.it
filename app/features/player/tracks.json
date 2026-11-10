@@ -76,5 +76,18 @@
       "soundcloud": "https://soundcloud.com/strx-musix/northern-festive-drive",
       "instagram": "https://www.instagram.com/reel/DeeeC32nOOS/"
     }
+  },
+  {
+    "id": "007-beyond-the-light",
+    "title": "Beyond the Light",
+    "duration": "4:49",
+    "publishedAt": "2026-11-10T18:48:32.323Z",
+    "audio": "/music/007-beyond-the-light.mp3",
+    "cover": "/music/007-beyond-the-light.jpg",
+    "links": {
+      "youtube": "https://youtu.be/Ree2WbSWFtI",
+      "soundcloud": "https://soundcloud.com/strx-musix/beyond-the-light",
+      "instagram": "https://www.instagram.com/reel/DfknhZUDikT/"
+    }
   }
 ]
