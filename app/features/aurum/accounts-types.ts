@@ -40,6 +40,8 @@ export interface AurumAccount {
   max_dd_pct?: number | null;
   dd_now_pct?: number | null;
   note?: string;
+  /** Clause shown under the header of the card (e.g. the account is part of a growth programme). */
+  program_note?: string;
   history: AccountPoint[];
 }
 
