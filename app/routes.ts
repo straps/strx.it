@@ -7,6 +7,6 @@ import { type RouteConfig, index, layout, route } from "@react-router/dev/routes
  * Private pages (no site chrome, no music player) live outside the layout.
  */
 export default [
-  layout("routes/site-layout.tsx", [index("routes/home.tsx"), route("trading", "routes/trading.tsx"), route("trading/accounts", "routes/trading-status.tsx"), route("aurum-axi", "routes/aurum-axi.tsx"), route("health", "routes/health.tsx")]),
+  layout("routes/site-layout.tsx", [index("routes/home.tsx"), route("trading", "routes/trading.tsx"), route("trading/accounts", "routes/trading-status.tsx"), route("aurum-axi", "routes/aurum-axi.tsx"), route("prop-firms", "routes/prop-firms.tsx"), route("health", "routes/health.tsx")]),
   route("trading-accounts", "routes/trading-accounts.tsx"),
 ] satisfies RouteConfig;
