@@ -167,7 +167,7 @@ export function AccountsPage({ snapshot }: { snapshot: AurumAccountsSnapshot }) 
       <section aria-labelledby="accounts-title" className="relative">
         <div aria-hidden="true" className="hero-glow absolute inset-x-0 -top-24 bottom-0 -z-10" />
         <Container className="flex flex-col gap-6 pt-16 pb-12 md:pt-24">
-          <a href="/aurum" className="inline-flex items-center gap-2 self-start font-mono text-sm text-link no-underline hover:underline">
+          <a href="/trading" className="inline-flex items-center gap-2 self-start font-mono text-sm text-link no-underline hover:underline">
             ← Aurum Switch
           </a>
           <h1 id="accounts-title" className="m-0 text-4xl leading-tight font-bold tracking-[-0.03em] md:text-[52px] md:leading-[60px]">
@@ -206,7 +206,7 @@ export function AccountsPage({ snapshot }: { snapshot: AurumAccountsSnapshot }) 
           simulated capital; past results do not guarantee future results.
         </p>
         <div className="flex flex-wrap gap-3">
-          <ButtonLink href="/aurum" variant="outline">
+          <ButtonLink href="/trading" variant="outline">
             How Aurum works
             <Icon name="arrowUpRight" />
           </ButtonLink>

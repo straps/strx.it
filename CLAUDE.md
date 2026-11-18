@@ -52,12 +52,15 @@ Public preview of a local server: `cloudflared tunnel --url http://localhost:417
 4. Needs data/bindings → add a `loader`, declare bindings in `wrangler.jsonc`, run `npm run cf-typegen`, read them via `import { env } from "cloudflare:workers"`.
 5. Add a nav entry in `navItems` if it belongs in the header. Nav hrefs are absolute (`/#skills`) so they work from any page.
 
-### /aurum (public)
+### /trading (public)
 
-- Public page for the Aurum Switch gold signal (`app/features/aurum/`, `app/routes/aurum.tsx`), SSR with a 1-hour edge cache.
+- Public page for the Aurum Switch gold signal (`app/features/aurum/`, `app/routes/trading.tsx`), SSR with a 1-hour edge cache.
 - Reads KV `aurum/public` (same `TRADING_KV` namespace as /trading-accounts). Account-level statistics only: growth without deposits, drawdown, monthly returns, equity curve, current regime, backtest summary. Never trades or positions.
 - Published every Monday 08:30 by `~/.hermes/scripts/aurum_macro/aurum_public.py` (Hermes cron), from the EA equity journal (one row per hour while gold trades).
-- `/aurum/accounts`: status of every account running an Aurum EA (own account and prop evaluations), from KV `aurum/accounts`, published every Monday 08:30 by `~/.hermes/scripts/aurum_macro/aurum_accounts.py` (same cron). Masked logins, account-level numbers only (balance, result since Aurum took over, target progress, loss-limit room, weekly history), never trades or positions. A card may carry a `program_note` clause (Axi Select own account: part of a growth programme, numbers are the own account only).
+- `/trading/accounts` (`app/routes/trading-status.tsx`): status of every account running an Aurum EA (own account and prop evaluations), from KV `aurum/accounts`, published every Monday 08:30 by `~/.hermes/scripts/aurum_macro/aurum_accounts.py` (same cron). Masked logins, account-level numbers only (balance, result since Aurum took over, target progress, loss-limit room, weekly history), never trades or positions. A card may carry a `program_note` clause (Axi Select own account: part of a growth programme, numbers are the own account only).
+
+- `/aurum` and `/aurum/accounts` were the original URLs: `workers/app.ts` answers them with a 301 to `/trading` and `/trading/accounts`. The `/aurum-axi` page keeps its name.
+- `/prop-firms/` is a static English page (`public/prop-firms/index.html`, a dated snapshot of prop firm challenges under 200 USD, edited by hand), linked from a section of `/trading`. It is served as an asset, outside the React app: keep the trailing slash in links.
 
 ### /health (private)
 
