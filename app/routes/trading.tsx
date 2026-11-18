@@ -18,10 +18,10 @@ export function meta() {
   });
 }
 
-/** Public numbers only: the snapshot holds account-level statistics, never trades or positions. */
+/** Public numbers only. The TopFX live account stopped on 18/11/2026: its live stats, regime and MQL5 signal are not sent to the page. */
 export async function loader() {
   const snapshot = await env.TRADING_KV.get<AurumSnapshot>(SNAPSHOT_KEY, "json");
-  return { snapshot };
+  return { snapshot: snapshot && { ...snapshot, live: null, regime: null, signal_url: "", broker: "", ea_version: "", live_since: "" } };
 }
 
 export function headers() {
