@@ -12,7 +12,7 @@ export const site = {
   ogImage: { path: "/og.png", width: 1200, height: 630, alt: "strx.it: project leader and AI-native full-stack developer" },
 } as const;
 
-export type SocialId = "telegram" | "linkedin" | "github" | "soundcloud" | "youtube";
+export type SocialId = "telegram" | "linkedin" | "github" | "soundcloud" | "youtube" | "instagram";
 
 export interface SocialLink {
   id: SocialId;
@@ -51,6 +51,12 @@ export const socials: Record<SocialId, SocialLink> = {
     label: "YouTube",
     href: "https://www.youtube.com/@strx-music",
     caption: "The music channel · @strx-music",
+  },
+  instagram: {
+    id: "instagram",
+    label: "Instagram",
+    href: "https://www.instagram.com/strxmusix/",
+    caption: "instagram.com/strxmusix",
   },
 };
 
