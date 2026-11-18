@@ -2,7 +2,7 @@ import type { IconName } from "~/components/icons";
 
 /** Copy of the /trading page, kept apart from markup. Numbers come from the KV snapshot, not from here. */
 export const aurum = {
-  badge: "Live signal · gold since 30 Oct 2026 · forex since 3 Nov 2026",
+  badge: "Live on IC Markets, Axi and prop-firm accounts",
   title: "Aurum Switch",
   tagline: "An automated gold strategy that knows when the market trends and when it ranges, balanced by a forex mean-reversion engine.",
   intro:
@@ -73,12 +73,6 @@ export const aurum = {
       "MetaTrader 4 Strategy Tester on TopFX symbols, 20,000 EUR, January 2019 to October 2026, simple (not compounded) returns. Only 2022 was slightly negative (-0.4%). The gold + forex drawdown compares gold alone with gold plus forex on the common July 2022 to October 2026 window. Simulated results, not live.",
   },
 
-  live: {
-    eyebrow: "live account",
-    title: "Real money, real broker",
-    intro: "A TopFX account on MetaTrader 4, updated three times a day (8:00, 14:00 and 20:00 CET). Growth excludes deposits and withdrawals, like MQL5 signals.",
-  },
-
   backtest: {
     eyebrow: "backtest",
     title: "Eight years of gold history",
@@ -89,9 +83,9 @@ export const aurum = {
 
   cta: {
     eyebrow: "follow",
-    title: "Copy the signal or just watch it",
-    text: "The account is public on MQL5: you can follow it live and subscribe from MetaTrader (gold and the six forex crosses are copied together). For questions, write me on Telegram.",
-    signalLabel: "Open the MQL5 signal",
+    title: "Follow the live accounts",
+    text: "Every account running Aurum, own and prop-firm, is on one page with the same numbers, good or bad, updated three times a day. For questions, write me on Telegram.",
+    accountsLabel: "Every live account",
     telegramLabel: "Ask on Telegram",
   },
 
