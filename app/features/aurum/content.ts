@@ -2,11 +2,11 @@ import type { IconName } from "~/components/icons";
 
 /** Copy of the /trading page, kept apart from markup. Numbers come from the KV snapshot, not from here. */
 export const aurum = {
-  badge: "Live on IC Markets, Axi and prop-firm accounts",
+  badge: "Live signal · IC Markets · since 3 Nov 2026",
   title: "Aurum Switch",
   tagline: "An automated gold strategy that knows when the market trends and when it ranges, balanced by a forex mean-reversion engine.",
   intro:
-    "Aurum reads the gold market regime from a 140-day channel on the daily chart, follows breakouts in trend mode and works a small ladder of limit orders when gold moves sideways. Since version 1.40 the same EA also trades six forex crosses with a mean-reversion engine that tends to earn when gold struggles. Every position has a stop loss from the moment it opens.",
+    "Aurum reads the gold market regime from a 140-day channel on the daily chart, follows breakouts in trend mode and works a small ladder of limit orders when gold moves sideways. The same EA also trades six forex crosses with a mean-reversion engine that tends to earn when gold struggles, and an ETH trend engine. Every position has a stop loss from the moment it opens.",
 
   how: {
     eyebrow: "how it works",
@@ -30,13 +30,13 @@ export const aurum = {
       {
         icon: "shield" as IconName,
         title: "Risk first",
-        text: "Size scales with the account. New trades stop at -25% from the equity peak and everything closes at -30%. No martingale, no averaging down, no hedging tricks.",
+        text: "Size scales with the account: 0.01 gold lots per 5,000 USD of balance. One protection for all engines: at -30% from the equity peak everything closes and the EA stops. No martingale, no averaging down, no hedging tricks.",
       },
     ],
   },
 
   forex: {
-    eyebrow: "forex engine · v1.40",
+    eyebrow: "forex engine",
     title: "Six crosses that pull back to their mean",
     intro:
       "Gold is a trending market, so Aurum earns in waves. To smooth the waves, the same EA runs a second engine on six forex crosses that tend to move in a range: it buys a pair when it is unusually far below its recent average and sells it when it is unusually far above, then exits when the price is back to normal.",
@@ -54,38 +54,44 @@ export const aurum = {
       {
         icon: "shield" as IconName,
         title: "Risk",
-        text: "2.5% of the capital at risk per trade, one trade per pair, a cap on total exposure, and the same drawdown protection as gold: -25% from the peak blocks new trades of both engines, -30% closes everything.",
+        text: "2.5% of the capital at risk per trade, one trade per pair, a cap on total exposure, and the same drawdown protection as gold: -30% from the peak closes every engine.",
       },
       {
         icon: "sparkles" as IconName,
-        title: "Why not crypto",
-        text: "An ETH trend engine is built in but switched off: on this broker the ETH spread is about 40 dollars, and with that cost the trend loses in the tester. It will be switched on only if crypto costs drop.",
+        title: "ETH trend",
+        text: "A third engine follows ETH breakouts of a 55-day channel with a 10-day exit, 6% of the capital at risk. It trades rarely and earns in the big crypto trends; on IC Markets the ETH spread is low enough for it to pay.",
       },
     ],
     pairs: ["GBPCAD", "AUDCAD", "EURCAD", "EURGBP", "CHFJPY", "NZDJPY"],
     stats: [
-      { label: "forex 2019-2026, per year", value: "+11.5%", tone: "gain" },
-      { label: "forex max drawdown", value: "6.3%", tone: "" },
-      { label: "with double spreads, per year", value: "+11.0%", tone: "gain" },
-      { label: "gold + forex max drawdown", value: "9.6% vs 12.5%", tone: "" },
+      { label: "forex 2019-2026, total", value: "+2,736 $", tone: "gain" },
+      { label: "forex positive months", value: "68 of 95", tone: "" },
+      { label: "forex worst month", value: "-109 $", tone: "" },
+      { label: "all engines, positive months", value: "70 of 95", tone: "gain" },
     ],
     note:
-      "MetaTrader 4 Strategy Tester on TopFX symbols, 20,000 EUR, January 2019 to October 2026, simple (not compounded) returns. Only 2022 was slightly negative (-0.4%). The gold + forex drawdown compares gold alone with gold plus forex on the common July 2022 to October 2026 window. Simulated results, not live.",
+      "MetaTrader 5 Strategy Tester on IC Markets, the live EA v1.06, each calendar year starting again from 2,600 USD, January 2019 to November 2026. Totals by engine: gold +8,758 $, forex +2,736 $, ETH +2,424 $. Simulated results, not live.",
+  },
+
+  live: {
+    eyebrow: "live account",
+    title: "Real money, real broker",
+    intro: "An IC Markets account on MetaTrader 5, started with 2,600 USD, updated three times a day (8:00, 14:00 and 20:00 CET). Growth excludes deposits and withdrawals, like MQL5 signals.",
   },
 
   backtest: {
     eyebrow: "backtest",
-    title: "Eight years of gold history",
+    title: "Eight years, year by year",
     intro:
-      "Simulated on XAUUSD with real spread, commission and swap, starting from 5,000 USD with 0.02 lots per 5,000 USD. Backtests are hypothetical: they show how the rules behaved, not what will happen.",
+      "The live EA in the MetaTrader 5 Strategy Tester on IC Markets prices, with real spread, commission and swap. Each calendar year starts again from 2,600 USD, so every bar is the result of that year alone, not compounded. Backtests are hypothetical: they show how the rules behaved, not what will happen.",
     note: "2025 and 2026 benefit from an exceptional gold trend; quiet years are much flatter.",
   },
 
   cta: {
     eyebrow: "follow",
-    title: "Follow the live accounts",
-    text: "Every account running Aurum, own and prop-firm, is on one page with the same numbers, good or bad, updated three times a day. For questions, write me on Telegram.",
-    accountsLabel: "Every live account",
+    title: "Copy the signal or just watch it",
+    text: "The account is public on MQL5: you can follow it live and subscribe from MetaTrader (gold, the six forex crosses and ETH are copied together). For questions, write me on Telegram.",
+    signalLabel: "Open the MQL5 signal",
     telegramLabel: "Ask on Telegram",
   },
 
