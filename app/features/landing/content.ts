@@ -95,6 +95,15 @@ export const stack = {
   ],
 };
 
+export interface AfterHoursItem {
+  title: string;
+  text: string;
+  /** Internal buttons, e.g. the Trading page. */
+  actions?: Array<{ label: string; href: string }>;
+  /** Social profiles shown as external buttons. Definitions live in `~/lib/site`. */
+  socials?: SocialId[];
+}
+
 export const afterHours = {
   eyebrow: "after_hours",
   title: "Off the clock, same mindset: build systems, measure, iterate.",
@@ -102,12 +111,14 @@ export const afterHours = {
     {
       title: "Trading",
       text: "Rules-based trading on funded and live accounts, with an MT5 expert advisor of my own. The same discipline as project work: a plan, a risk limit and a review after every cycle.",
+      actions: [{ label: "Trading", href: "/trading" }],
     },
     {
       title: "Music",
       text: "Afro tech with an ethnic, esoteric edge, produced with AI tools and released on YouTube and SoundCloud. AI as an instrument, not a shortcut.",
+      socials: ["youtube", "soundcloud", "instagram"],
     },
-  ],
+  ] satisfies AfterHoursItem[],
 };
 
 export const links = {
