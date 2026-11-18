@@ -1,6 +1,6 @@
 import type { IconName } from "~/components/icons";
 
-/** Copy of the /aurum page, kept apart from markup. Numbers come from the KV snapshot, not from here. */
+/** Copy of the /trading page, kept apart from markup. Numbers come from the KV snapshot, not from here. */
 export const aurum = {
   badge: "Live signal · gold since 30 Oct 2026 · forex since 3 Nov 2026",
   title: "Aurum Switch",

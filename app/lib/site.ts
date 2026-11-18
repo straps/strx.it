@@ -60,5 +60,5 @@ export const navItems = [
   { label: "stack", href: "/#stack" },
   { label: "after_hours", href: "/#after-hours" },
   { label: "links", href: "/#links" },
-  { label: "aurum", href: "/aurum" },
+  { label: "trading", href: "/trading" },
 ] as const;

@@ -48,7 +48,7 @@ function Hero({ snapshot }: { snapshot: AurumSnapshot }) {
             <ButtonLink href="#live" variant="outline">
               See the numbers
             </ButtonLink>
-            <ButtonLink href="/aurum/accounts" variant="outline">
+            <ButtonLink href="/trading/accounts" variant="outline">
               Every account
             </ButtonLink>
           </div>
@@ -119,7 +119,7 @@ export function AurumPage({ snapshot }: { snapshot: AurumSnapshot }) {
           {snapshot.broker} · {snapshot.platform} · {snapshot.instrument} · EA v{snapshot.ea_version}
           {live && ` · data to ${dateLabel(live.updated)}`}
         </p>
-        <a href="/aurum/accounts" className="inline-flex items-center gap-2 self-start font-mono text-sm text-link no-underline hover:underline">
+        <a href="/trading/accounts" className="inline-flex items-center gap-2 self-start font-mono text-sm text-link no-underline hover:underline">
           Aurum also runs on prop-firm accounts: see every account
           <Icon name="arrowUpRight" />
         </a>
@@ -196,6 +196,21 @@ export function AurumPage({ snapshot }: { snapshot: AurumSnapshot }) {
           <p className="m-0 pt-2 text-xs text-muted">* to October. {aurum.backtest.note}</p>
         </div>
         <p className="m-0 text-sm text-muted">{bt.tester}</p>
+      </Section>
+
+      <Section
+        id="prop-firms"
+        eyebrow="prop firms"
+        title="Choosing a prop firm"
+        intro="Aurum also runs on prop-firm evaluations. This is the comparison I keep while choosing them: challenges under 200 USD with real checkout prices, discount codes, drawdown type, EA policy and news rules."
+        className="bg-surface"
+      >
+        <div className="flex flex-wrap gap-3">
+          <ButtonLink href="/prop-firms/" variant="outline">
+            Prop firm comparison
+            <Icon name="arrowUpRight" />
+          </ButtonLink>
+        </div>
       </Section>
 
       <Section id="follow" eyebrow={aurum.cta.eyebrow} title={aurum.cta.title} intro={aurum.cta.text}>

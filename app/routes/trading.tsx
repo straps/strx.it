@@ -5,13 +5,13 @@ import { AurumPage } from "~/features/aurum/aurum-page";
 import { AURUM_SCHEMA_VERSION, type AurumSnapshot } from "~/features/aurum/types";
 import { pageMeta } from "~/lib/meta";
 
-import type { Route } from "./+types/aurum";
+import type { Route } from "./+types/trading";
 
 const SNAPSHOT_KEY = "aurum/public";
 
 export function meta() {
   return pageMeta({
-    path: "/aurum",
+    path: "/trading",
     title: "Aurum Switch · automated gold trading",
     description:
       "Aurum Switch trades gold (XAUUSD) automatically: trend mode on channel breakouts, a limit-order ladder in ranges, a stop loss on every trade. Live account statistics updated every week.",
