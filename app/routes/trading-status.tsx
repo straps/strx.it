@@ -5,13 +5,13 @@ import { AccountsPage } from "~/features/aurum/accounts-page";
 import { AURUM_ACCOUNTS_SCHEMA_VERSION, type AurumAccountsSnapshot } from "~/features/aurum/accounts-types";
 import { pageMeta } from "~/lib/meta";
 
-import type { Route } from "./+types/aurum-accounts";
+import type { Route } from "./+types/trading-status";
 
 const SNAPSHOT_KEY = "aurum/accounts";
 
 export function meta() {
   return pageMeta({
-    path: "/aurum/accounts",
+    path: "/trading/accounts",
     title: "Aurum Switch · every account",
     description:
       "Status of every account running the Aurum gold EAs: own account and prop-firm evaluations, results, targets and loss-limit room, updated every Monday.",
