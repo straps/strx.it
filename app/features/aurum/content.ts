@@ -87,6 +87,18 @@ export const aurum = {
     note: "2025 and 2026 benefit from an exceptional gold trend; quiet years are much flatter.",
   },
 
+  certificates: {
+    eyebrow: "certificates",
+    title: "Recognised by the prop firms",
+    intro:
+      "Prop firms award a certificate when a trader completes an evaluation. This one comes from FundedNext, for a Stellar 2-Step challenge.",
+    image: "/trading/fundednext-elite-trader-certificate.webp",
+    alt: "FundedNext Certificate of Appreciation presented to Francesco Strappini, officially a FundedNext Elite Trader, Stellar 2-Step Challenge P1 6K, issued on 20 November 2026.",
+    caption: "FundedNext Elite Trader · Stellar 2-Step Challenge P1 · 6K · issued 20 Nov 2026",
+    linkLabel: "FundedNext",
+    linkHref: "https://fundednext.com/",
+  },
+
   cta: {
     eyebrow: "follow",
     title: "Copy the signal or just watch it",
