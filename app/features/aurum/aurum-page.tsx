@@ -213,6 +213,29 @@ export function AurumPage({ snapshot }: { snapshot: AurumSnapshot }) {
         </div>
       </Section>
 
+      <Section
+        id="certificates"
+        eyebrow={aurum.certificates.eyebrow}
+        title={aurum.certificates.title}
+        intro={aurum.certificates.intro}
+      >
+        <figure className="m-0 flex max-w-200 flex-col gap-3">
+          <img
+            src={aurum.certificates.image}
+            alt={aurum.certificates.alt}
+            width={1600}
+            height={1113}
+            loading="lazy"
+            decoding="async"
+            className="h-auto w-full rounded-xl border border-border"
+          />
+          <figcaption className="flex flex-wrap items-center justify-between gap-2 text-sm text-muted">
+            <span>{aurum.certificates.caption}</span>
+            <ExternalLink href={aurum.certificates.linkHref}>{aurum.certificates.linkLabel}</ExternalLink>
+          </figcaption>
+        </figure>
+      </Section>
+
       <Section id="follow" eyebrow={aurum.cta.eyebrow} title={aurum.cta.title} intro={aurum.cta.text}>
         <div className="flex flex-wrap gap-3">
           <ButtonLink href={snapshot.signal_url} target="_blank" rel="noopener noreferrer">
