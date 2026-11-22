@@ -88,6 +88,22 @@ row("IC Funded","1-Step Accelerated","25K",169.95,309,"BLACKIC45",1,IC,"VERIFIED
 row("IC Funded","Instant Funded","5K",59.95,109,"BLACKIC45",0,ICI,"VERIFIED at checkout. 5% trailing EOD DD ($250), 3% daily, 20% consistency, news forbidden, no weekend holding");
 row("IC Funded","Instant Funded","10K",90.2,164,"BLACKIC45",0,ICI,"VERIFIED at checkout. 5% trailing EOD DD ($500), 3% daily ($300), 20% consistency, 1.5% risk per idea, sessions 5 days of $50");
 row("IC Funded","Instant Funded","25K",186.45,339,"BLACKIC45",0,ICI,"VERIFIED at checkout. same, DD $1,250");
+// Fintokei: own EAs ok (also customised third-party ones), copy between own accounts ok, static DD, news and weekend free.
+// "No consistency" is 0.5 because Fintokei can impose Consistency Rules (CR1/CR2) after warnings. Swap-free not found: null.
+const FK: Crit[] = [1,1,.5,1,.5,null,1,1];
+const FKS: Crit[] = [1,1,.5,1,.5,null,1,1];
+row("Fintokei","SwiftTrader 1-Step","5K",35.2,44,"BLACKFRIDAY20",1,FKS,"VERIFIED at checkout ($44 -> $35.20). 6% target, 2% daily on equity, 3% static max loss ($150), 3% daily profit cap in evaluation, max 60 days, 90% split, instant payouts, own EAs ok");
+row("Fintokei","SwiftTrader 1-Step","10K",71.2,89,"BLACKFRIDAY20",1,FKS,"VERIFIED at checkout ($89 -> $71.20). 6% target, 2% daily ($200), 3% static max loss ($300), 3 days minimum, 90% split, leverage 1:25");
+row("Fintokei","SwiftTrader 1-Step","20K",115.2,144,"BLACKFRIDAY20",1,FKS,"VERIFIED at checkout ($144 -> $115.20). Same rules");
+row("Fintokei","SwiftTrader 1-Step","50K",239.2,299,"BLACKFRIDAY20",1,FKS,"VERIFIED at checkout, above $200 only as reference (not shown in this table)");
+row("Fintokei","ProTrader 2-Step","5K",39.2,49,"BLACKFRIDAY20",2,FK,"VERIFIED at checkout ($49 -> $39.20). 8% + 6%, 5% daily, 10% static max loss, 3 trading days, 80% split, 1:100 on FX and gold");
+row("Fintokei","ProTrader 2-Step","10K",79.2,99,"BLACKFRIDAY20",2,FK,"VERIFIED at checkout ($99 -> $79.20). Same rules, $1,000 static buffer");
+row("Fintokei","ProTrader 2-Step","20K",127.2,159,"BLACKFRIDAY20",2,FK,"VERIFIED at checkout ($159 -> $127.20). Same rules");
+row("Fintokei","ProTrader Swing 2-Step","5K",55.2,69,"BLACKFRIDAY20",2,FK,"VERIFIED at checkout ($69 -> $55.20). Same targets and drawdown as ProTrader, for swing trading");
+row("Fintokei","ProTrader Swing 2-Step","10K",95.2,119,"BLACKFRIDAY20",2,FK,"calculated ($119 -20%, list read at checkout). Same rules");
+row("Fintokei","ProTrader Swing 2-Step","20K",159.2,199,"BLACKFRIDAY20",2,FK,"calculated ($199 -20%, list read at checkout). Same rules");
+row("Fintokei","StartTrader 1-Phase","5K",27.2,34,"BLACKFRIDAY20",1,[1,1,.5,1,.5,null,1,1],"VERIFIED at checkout ($34 -> $27.20). 3% target, 80% flat split since 21 Oct 2026, soft breach gives a second chance");
+
 const FP0: Crit[] = [1,1,.5,0,0,0,0,0], FP1: Crit[] = [1,1,.5,1,0,.5,.5,.5];
 row("FundingPips","Zero (instant)","5K",51.0,60,"HALLOWEEN -15%",0,FP0,"5% trailing DD, 1% open risk, 7 profitable days/30, no news/weekend");
 row("FundingPips","Zero (instant)","10K",74.8,88,"HALLOWEEN -15%",0,FP0,"same");
